@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Division.cs" />
     <Compile Include="ISELabelItem.cs" />
     <Compile Include="SELabel.cs" />
     <Compile Include="SELabelDataType.cs" />

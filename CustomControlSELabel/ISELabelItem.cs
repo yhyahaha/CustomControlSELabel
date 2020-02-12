@@ -29,7 +29,7 @@ namespace CustomControlSELabel
         /// スペース１文字 + キーワードの羅列
         /// Containsで中間一致、[Space]キーワードで前方一致に対応する
         /// </summary>
-        string SerchKeys { get; }
+        string SearchKeys { get; }
 
         /// <summary>
         /// SELabelItemのデータタイプ
