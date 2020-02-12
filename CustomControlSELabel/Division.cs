@@ -8,8 +8,8 @@ namespace CustomControlSELabel
 {
     class Division:ISELabelItem
     {
-        private string _Code;
-        public string Code
+        private int _Code;
+        public int Code
         {
             get { return this._Code; }
             private set
@@ -64,7 +64,7 @@ namespace CustomControlSELabel
         }
 
         // コンストラクター
-        public Division(string code, string displayString, string sortKey, 
+        public Division(int code, string displayString, string sortKey, 
                         string searchKeys, SELableDataType dataType)
         {
             this.Code = code;
@@ -73,6 +73,6 @@ namespace CustomControlSELabel
             this.SearchKeys = searchKeys;
             this.DataType = dataType;
         }
-       
+
     }
 }

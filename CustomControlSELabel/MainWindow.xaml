@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CustomControlSELabel"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="400">
+        
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

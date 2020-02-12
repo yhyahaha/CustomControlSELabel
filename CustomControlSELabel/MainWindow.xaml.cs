@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+
 
 namespace CustomControlSELabel
 {
@@ -20,6 +22,21 @@ namespace CustomControlSELabel
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        ObservableCollection<ISELabelItem> Items { get; set; }
+        = new ObservableCollection<ISELabelItem>();
+
+        private ISELabelItem _Item;
+        public ISELabelItem Item
+        {
+            get { return _Item; }
+            set
+            {
+                if (Item == value) return;
+                _Item = value;
+            }
+        }
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -28,26 +45,23 @@ namespace CustomControlSELabel
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var items = GetDivisions();
+            GetDivisions();
+            Item = Items[0];
         }
 
-        List<ISELabelItem> GetDivisions()
+        void GetDivisions()
         {
-            List<ISELabelItem> items = new List<ISELabelItem>();
+            var dev1 = new Division(11000, "コーポ", "110", " 11000 ｺｰﾎﾟﾚｰﾄ", SELableDataType.StringData);
+            var dev2 = new Division(13000, "制作", "130", " 13000 ｾｲｻｸ", SELableDataType.StringData);
+            var dev3 = new Division(13500, "企画演出", "135", " 13500 ｷｶｸｴﾝｼｭﾂ", SELableDataType.StringData);
+            var dev4 = new Division(14000, "撮影", "140", " 14000 ｻﾂｴｲ", SELableDataType.StringData);
+            var dev5 = new Division(15000, "照明", "150", " 15000 ｼｮｳﾒｲ", SELableDataType.StringData);
 
-            var dev1 = new Division("11000", "コーポ", "110", " 11000 ｺｰﾎﾟﾚｰﾄ", SELableDataType.String);
-            var dev2 = new Division("13000", "制作", "130", " 13000 ｾｲｻｸ", SELableDataType.String);
-            var dev3 = new Division("13500", "企画演出", "135", " 13500 ｷｶｸｴﾝｼｭﾂ", SELableDataType.String);
-            var dev4 = new Division("14000", "撮影", "140", " 14000 ｻﾂｴｲ", SELableDataType.String);
-            var dev5 = new Division("15000", "照明", "150", " 15000 ｼｮｳﾒｲ", SELableDataType.String);
-
-            items.Add(dev1);
-            items.Add(dev2);
-            items.Add(dev3);
-            items.Add(dev4);
-            items.Add(dev5);
-
-            return items;
+            Items.Add(dev1);
+            Items.Add(dev2);
+            Items.Add(dev3);
+            Items.Add(dev4);
+            Items.Add(dev5);
         }
 
     }

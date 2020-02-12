@@ -6,35 +6,35 @@ using System.Threading.Tasks;
 
 namespace CustomControlSELabel
 {
-    interface ISELabelItem
+    public interface ISELabelItem
     {       
         /// <summary>
         /// オブジェクトのID
         /// </summary>
-        string Code { get; }
+        public int Code { get; }
 
         /// <summary>
         /// SELabelにObjectが設定されている時に表示される文字列
         /// </summary>
-        string DisplayString { get; }
+        public string DisplayString { get; }
 
         /// <summary>
         /// 検索結果がリスト表示された場合のソート
         /// 通常はヨミガナを使う
         /// </summary>
-        string SortKey { get; }
+        public string SortKey { get; }
 
         /// <summary>
         /// 検索に使うキーワード
         /// スペース１文字 + キーワードの羅列
         /// Containsで中間一致、[Space]キーワードで前方一致に対応する
         /// </summary>
-        string SearchKeys { get; }
+        public string SearchKeys { get; }
 
         /// <summary>
         /// SELabelItemのデータタイプ
         /// </summary>
-        SELableDataType DataType { get; }
-
+        public SELableDataType DataType { get; }
+        
     }
 }

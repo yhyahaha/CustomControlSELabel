@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CustomControlSELabel
 {
-    enum SELableDataType
+    public enum SELableDataType
     {
-        String,
-        Currency,
-        Date
+        StringData,
+        CurrencyData,
+        DateData
     }
 }
