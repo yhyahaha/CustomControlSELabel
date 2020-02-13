@@ -19,7 +19,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
-                        <Label Content="{Binding Item.DisplayString}" />
+                        <Label Content="{ Binding Item }" />
                         
                     </Grid>
                 </ControlTemplate>

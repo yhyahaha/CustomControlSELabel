@@ -76,5 +76,10 @@ namespace TestViewModel
             this.DataType = dataType;
         }
 
+        public override string ToString()
+        {
+            return _DisplayString;
+        }
+
     }
 }
