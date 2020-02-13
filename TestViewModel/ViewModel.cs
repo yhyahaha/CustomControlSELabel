@@ -17,6 +17,7 @@ namespace TestViewModel
         public ViewModel()
         {
             CreateDivisionsSampleData();
+            Item = null;
             Item = Items[1];
         }
 

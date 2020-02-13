@@ -20,7 +20,7 @@
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
                         <Label x:Name="labelItem" Content="{ Binding Item }" />
-                        <TextBox x:Name="textBoxKeyword" Text="Textbox"  Background="LawnGreen" Opacity="0.5"/>
+                        <TextBox x:Name="textBoxKeyword" Text="Textbox"  Background="AliceBlue" Opacity="0.5"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
