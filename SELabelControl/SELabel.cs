@@ -21,7 +21,7 @@ namespace SELabelControl
     {
         // フィールド
         SELabelStatus _status = SELabelStatus.Default;
-       
+        Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;       
 
         static SELabel()
         {
@@ -62,12 +62,30 @@ namespace SELabelControl
             {
                 case SELabelStatus.Selected:
                     System.Diagnostics.Debug.WriteLine("SELECTED");
+
+                    labelItemElement.Visibility = Visibility.Visible;
+                    labelItemElement.Background = backgroundBrushControlHasFocus;
+
+                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
+
                     break;
                 case SELabelStatus.Editing:
                     System.Diagnostics.Debug.WriteLine("EDITING");
+
+                    labelItemElement.Visibility = Visibility.Collapsed;
+
+                    textBoxKeywordElement.Visibility = Visibility.Visible;
+                    textBoxKeywordElement.Background = backgroundBrushControlHasFocus;
+
                     break;
                 case SELabelStatus.Default:
                     System.Diagnostics.Debug.WriteLine("DEFAULT");
+
+                    labelItemElement.Visibility = Visibility.Visible;
+                    labelItemElement.Background = Brushes.Transparent;
+
+                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
+
                     break;
                 default:
                     break;
@@ -80,7 +98,7 @@ namespace SELabelControl
             base.OnApplyTemplate();
 
             labelItemElement = GetTemplateChild("labelItem") as Label;
-            textBoxKeyWordElement = GetTemplateChild("textBoxKeywrod") as TextBox;
+            textBoxKeywordElement = GetTemplateChild("textBoxKeyword") as TextBox;
         }
 
         private Label _labelItemElement;
@@ -93,13 +111,13 @@ namespace SELabelControl
             }
         }
 
-        private TextBox _textBoxKeyWordElement;
-        private TextBox textBoxKeyWordElement
+        private TextBox _textBoxKeywordElement;
+        private TextBox textBoxKeywordElement
         {
-            get { return _textBoxKeyWordElement; }
+            get { return _textBoxKeywordElement; }
             set
             {
-                _textBoxKeyWordElement = value;
+                _textBoxKeywordElement = value;
             }
         }
 
