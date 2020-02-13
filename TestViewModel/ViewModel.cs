@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomControlSELabel
+namespace TestViewModel
 {
-    public enum SELableDataType
+    class ViewModel
     {
-        StringData,
-        CurrencyData,
-        DateData
     }
 }

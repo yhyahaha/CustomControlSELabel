@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Interfaces;
+using SELabelControl;
 
-namespace CustomControlSELabel
+namespace TestViewModel
 {
-    class Division:ISELabelItem
+    public class Division:ISELabelItem
     {
         private int _Code;
         public int Code
@@ -52,8 +54,8 @@ namespace CustomControlSELabel
             }
         }
 
-        private SELableDataType _DataType;
-        public SELableDataType DataType
+        private Type _DataType;
+        public Type DataType
         {
             get { return _DataType; }
             set
@@ -65,7 +67,7 @@ namespace CustomControlSELabel
 
         // コンストラクター
         public Division(int code, string displayString, string sortKey, 
-                        string searchKeys, SELableDataType dataType)
+                        string searchKeys, Type dataType)
         {
             this.Code = code;
             this.DisplayString = displayString;
