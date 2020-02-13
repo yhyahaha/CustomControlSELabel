@@ -50,10 +50,6 @@
       <Project>{cf3c9344-7347-4803-96c0-a49c80937366}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SELabelControl\SELabelControl.csproj">
-      <Project>{a51fed27-206b-4e96-8544-9824f68e862c}</Project>
-      <Name>SELabelControl</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
