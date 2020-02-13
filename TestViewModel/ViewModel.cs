@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestViewModel
 {
-    class ViewModel
+    public class ViewModel
     {
     }
 }
