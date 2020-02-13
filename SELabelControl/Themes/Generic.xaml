@@ -3,13 +3,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:SELabelControl">
     
+    <Style x:Key="ControlFocused">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid Background="Aqua" Opacity="0.1"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type local:SELabel}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ControlFocused}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
                         <Label Content="{Binding Item.DisplayString}" />
+                        
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
