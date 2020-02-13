@@ -19,9 +19,17 @@ namespace SELabelControl
 {
     public class SELabel : Control
     {
+        // フィールド
+        SELabelStatus _status = SELabelStatus.Default;
+
         static SELabel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SELabel), new FrameworkPropertyMetadata(typeof(SELabel)));
+        }
+
+        public SELabel()
+        {
+            
         }
 
         // Elements
@@ -51,6 +59,13 @@ namespace SELabelControl
             {
                 _textBoxKeyWordElement = value;
             }
+        }
+
+        enum SELabelStatus
+        {
+            Default,
+            Selected,
+            Editing
         }
     }
 
