@@ -22,7 +22,6 @@ namespace CustomControlSELabel
     /// </summary>
     public partial class MainWindow : Window
     {
-
         ObservableCollection<ISELabelItem> Items { get; set; }
         = new ObservableCollection<ISELabelItem>();
 
@@ -32,7 +31,6 @@ namespace CustomControlSELabel
             get { return _Item; }
             set
             {
-                if (Item == value) return;
                 _Item = value;
             }
         }
@@ -46,7 +44,15 @@ namespace CustomControlSELabel
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             GetDivisions();
-            Item = Items[0];
+            Item = Items[1];
+
+            this.DataContext = Items;
+
+            SELabel sELabel = new SELabel();
+            Grid.SetColumn(sELabel, 1);
+            Grid.SetRow(sELabel, 1);
+            grid.Children.Add(sELabel);
+
         }
 
         void GetDivisions()

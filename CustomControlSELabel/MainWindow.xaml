@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:CustomControlSELabel"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="400">
-        
-    <Grid>
+    <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -21,9 +20,9 @@
         </Grid.ColumnDefinitions>
 
         <TextBox Grid.Row="0" Grid.Column="1" Text="Dummy TextBox 1" Background="PaleGreen"/>
-        
+
         <!--SELable-->
-        <local:SELabel Grid.Row="1" Grid.Column="1"/>
+        <!--<local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1"/>-->
 
         <TextBox Grid.Row="2" Grid.Column="1" Text="Dummy TextBox 2" Background="PaleGreen"/>
 
