@@ -8,13 +8,13 @@ using SELabelControl;
 
 namespace TestViewModel
 {
-    public class Division:ISELabelItem
+    public class Division : ISELabelItem
     {
         private int _Code;
         public int Code
         {
             get { return this._Code; }
-            private set
+            set
             {
                 if (value == _Code) return;
                 _Code = value;
@@ -25,7 +25,7 @@ namespace TestViewModel
         public string DisplayString
         {
             get { return this._DisplayString; }
-            private set
+            set
             {
                 if (value == _DisplayString) return;
                 _DisplayString = value;
@@ -36,7 +36,7 @@ namespace TestViewModel
         public string SortKey
         {
             get { return this._SortKey; }
-            private set
+            set
             {
                 if (value == _SortKey) return;
                 _SortKey = value;
@@ -47,7 +47,7 @@ namespace TestViewModel
         public string SearchKeys
         {
             get { return this._SearchKeys; }
-            private set
+            set
             {
                 if (value == _SearchKeys) return;
                 _SearchKeys = value;
