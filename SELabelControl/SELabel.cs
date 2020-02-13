@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Interfaces;
 
 namespace SELabelControl
 {
@@ -33,12 +33,11 @@ namespace SELabelControl
             this.IsKeyboardFocusWithinChanged += SELabel_IsKeyboardFocusWithinChanged;
         }
 
-
         private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (this.IsKeyboardFocusWithin)
             {
-                if(labelItemElement.Content != null)
+                if(SxValue != null)
                 {
                     _status = SELabelStatus.Selected;
                     ChangeSELabelFunction();
@@ -85,7 +84,7 @@ namespace SELabelControl
                     labelItemElement.Background = Brushes.Transparent;
 
                     textBoxKeywordElement.Visibility = Visibility.Collapsed;
-
+                    
                     break;
                 default:
                     break;
@@ -120,6 +119,36 @@ namespace SELabelControl
                 _textBoxKeywordElement = value;
             }
         }
+
+        // 依存関係プロパティの定義
+        //public static readonly DependencyProperty SIValueProperty =
+        //    DependencyProperty.Register("SIValue", typeof(object), typeof(SELabel));
+
+        //public object SIValue
+        //{
+        //    get { return (object)GetValue(SIValueProperty); }
+        //    set 
+        //    { 
+        //        SetValue(SIValueProperty, value);
+        //        _status = SELabelStatus.Default;
+        //        ChangeSELabelFunction();
+        //    }
+        //}
+
+        public static readonly DependencyProperty SxValueProperty =
+            DependencyProperty.Register("SxValue", typeof(string), typeof(SELabel));
+
+        public string SxValue
+        {
+            get { return (string)GetValue(SxValueProperty); }
+            set
+            {
+                SetValue(SxValueProperty, value);
+                _status = SELabelStatus.Default;
+                ChangeSELabelFunction();
+            }
+        }
+
 
         enum SELabelStatus
         {

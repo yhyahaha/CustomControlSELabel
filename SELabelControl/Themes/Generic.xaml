@@ -19,8 +19,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
-                        <Label x:Name="labelItem" Content="{ Binding Item }" />
-                        <TextBox x:Name="textBoxKeyword" Text="Textbox" />
+                        <Label x:Name="labelItem" Content="{ Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:SELabel}},Path=SxValue }" />
+                        <TextBox x:Name="textBoxKeyword"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
