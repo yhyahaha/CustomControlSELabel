@@ -19,8 +19,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
-                        <Label Content="{ Binding Item }" />
-                        
+                        <Label x:Name="labelItem" Content="{ Binding Item }" />
+                        <TextBox x:Name="textBoxKeyword" Text="Textbox"  Background="LawnGreen" Opacity="0.5"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
