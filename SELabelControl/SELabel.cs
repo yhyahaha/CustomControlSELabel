@@ -21,6 +21,7 @@ namespace SELabelControl
     {
         // フィールド
         SELabelStatus _status = SELabelStatus.Default;
+       
 
         static SELabel()
         {
@@ -29,7 +30,48 @@ namespace SELabelControl
 
         public SELabel()
         {
-            
+            this.IsKeyboardFocusWithinChanged += SELabel_IsKeyboardFocusWithinChanged;
+        }
+
+
+        private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.IsKeyboardFocusWithin)
+            {
+                if(labelItemElement.Content != null)
+                {
+                    _status = SELabelStatus.Selected;
+                    ChangeSELabelFunction();
+                }
+                else
+                {
+                    _status = SELabelStatus.Editing;
+                    ChangeSELabelFunction();
+                }
+            }
+            else
+            {
+                _status = SELabelStatus.Default;    
+                ChangeSELabelFunction();
+            }
+        }
+
+        void ChangeSELabelFunction()
+        {
+            switch (_status)
+            {
+                case SELabelStatus.Selected:
+                    System.Diagnostics.Debug.WriteLine("SELECTED");
+                    break;
+                case SELabelStatus.Editing:
+                    System.Diagnostics.Debug.WriteLine("EDITING");
+                    break;
+                case SELabelStatus.Default:
+                    System.Diagnostics.Debug.WriteLine("DEFAULT");
+                    break;
+                default:
+                    break;
+            }
         }
 
         // Elements
