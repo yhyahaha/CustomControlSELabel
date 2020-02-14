@@ -32,7 +32,7 @@ namespace CustomControlSELabel
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            message.Text = "Is Item Null? " + (_viewModel.Item == null).ToString();
+            message.Text = "Is Item Null? " + (_viewModel.Item == null).ToString(System.Globalization.CultureInfo.CurrentCulture);
             
             
             if(_viewModel.Item != null)

@@ -22,7 +22,7 @@
         <TextBox x:Name="message" Grid.Row="0" Grid.Column="1" Text="Dummy TextBox 1" Background="PaleGreen"/>
 
         <!--SELable-->
-        <local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1" SeValue="{Binding Item, Mode=TwoWay }"/>
+        <local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1" SeValue="{Binding Item, Mode=TwoWay }" SeItemsList="{Binding Items}"/>
 
         <TextBox Grid.Row="2" Grid.Column="1" Text="Dummy TextBox2" Background="PaleGreen"/>
         <Button x:Name="button" Content="Button" Click="button_Click"/>

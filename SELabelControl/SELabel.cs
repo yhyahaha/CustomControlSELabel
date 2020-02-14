@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -48,9 +49,9 @@ namespace SELabelControl
         }
 
 
-        /***************************
+     /***************************
             SELabel本体のEvent
-        ****************************/
+     ****************************/
 
         // --- Initialize ---
         
@@ -134,6 +135,8 @@ namespace SELabelControl
             }
         }
 
+
+        public int myInteger { get; set; }
 
      /***************************
          Private Methods
@@ -234,12 +237,18 @@ namespace SELabelControl
             set { SetValue(IsSeValueFromListProperty, value); }
         }
 
-        // 検索リスト 
-        // ListISELabelItems
+        // 検索用リストの受取
+        public static readonly DependencyProperty SeItemsListProperty =
+            DependencyProperty.Register("SeItemsList", typeof(List<object>), typeof(SELabel));
 
+        public List<object> SeItemsList
+        {
+            get { return (List<object>)GetValue(SeItemsListProperty); }
+            set { SetValue(SeItemsListProperty, value); }
+        }
 
      /***************************
-         開発用 Method
+            開発用 Method
      ****************************/
 
         private void WL(string str)
