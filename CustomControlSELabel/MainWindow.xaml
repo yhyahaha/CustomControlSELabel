@@ -22,7 +22,7 @@
         <TextBox Grid.Row="0" Grid.Column="1" Text="Dummy TextBox 1" Background="PaleGreen"/>
 
         <!--SELable-->
-        <local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1" SxValue="{Binding Item.DisplayString}"/>
+        <local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1" SeValue="{Binding Item}"/>
 
         <TextBox Grid.Row="2" Grid.Column="1" Text="Dummy TextBox2" Background="PaleGreen"/>
 

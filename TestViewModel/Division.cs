@@ -78,7 +78,7 @@ namespace TestViewModel
 
         public override string ToString()
         {
-            return _DisplayString;
+            return _DisplayString + "(override ToString)";
         }
 
     }

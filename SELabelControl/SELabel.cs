@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Interfaces;
 
 namespace SELabelControl
 {
@@ -26,18 +25,26 @@ namespace SELabelControl
         static SELabel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SELabel), new FrameworkPropertyMetadata(typeof(SELabel)));
+            System.Diagnostics.Debug.WriteLine("static SELabel");
         }
 
         public SELabel()
         {
             this.IsKeyboardFocusWithinChanged += SELabel_IsKeyboardFocusWithinChanged;
+
+            this.Loaded += SELabel_Loaded;
+        }
+
+        private void SELabel_Loaded(object sender, RoutedEventArgs e)
+        {
+            ResetControl();
         }
 
         private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (this.IsKeyboardFocusWithin)
             {
-                if(SxValue != null)
+                if(SeValue != null)
                 {
                     _status = SELabelStatus.Selected;
                     ChangeSELabelFunction();
@@ -60,40 +67,45 @@ namespace SELabelControl
             switch (_status)
             {
                 case SELabelStatus.Selected:
-                    System.Diagnostics.Debug.WriteLine("SELECTED");
-
                     labelItemElement.Visibility = Visibility.Visible;
                     labelItemElement.Background = backgroundBrushControlHasFocus;
 
                     textBoxKeywordElement.Visibility = Visibility.Collapsed;
 
                     break;
-                case SELabelStatus.Editing:
-                    System.Diagnostics.Debug.WriteLine("EDITING");
 
+                case SELabelStatus.Editing:
                     labelItemElement.Visibility = Visibility.Collapsed;
 
                     textBoxKeywordElement.Visibility = Visibility.Visible;
                     textBoxKeywordElement.Background = backgroundBrushControlHasFocus;
 
                     break;
-                case SELabelStatus.Default:
-                    System.Diagnostics.Debug.WriteLine("DEFAULT");
 
+                case SELabelStatus.Default:
                     labelItemElement.Visibility = Visibility.Visible;
                     labelItemElement.Background = Brushes.Transparent;
 
                     textBoxKeywordElement.Visibility = Visibility.Collapsed;
                     
                     break;
+
                 default:
                     break;
             }
         }
 
-        // Elements
+        void ResetControl()
+        {
+            _status = SELabelStatus.Default;
+            ChangeSELabelFunction();
+        }
+
+        // Elementsの定義
         public override void OnApplyTemplate()
         {
+            WL("public override void OnApplyTemplate");
+
             base.OnApplyTemplate();
 
             labelItemElement = GetTemplateChild("labelItem") as Label;
@@ -121,40 +133,29 @@ namespace SELabelControl
         }
 
         // 依存関係プロパティの定義
-        //public static readonly DependencyProperty SIValueProperty =
-        //    DependencyProperty.Register("SIValue", typeof(object), typeof(SELabel));
+        public static readonly DependencyProperty SeValueProperty =
+            DependencyProperty.Register("SeValue", typeof(object), typeof(SELabel));
 
-        //public object SIValue
-        //{
-        //    get { return (object)GetValue(SIValueProperty); }
-        //    set 
-        //    { 
-        //        SetValue(SIValueProperty, value);
-        //        _status = SELabelStatus.Default;
-        //        ChangeSELabelFunction();
-        //    }
-        //}
-
-        public static readonly DependencyProperty SxValueProperty =
-            DependencyProperty.Register("SxValue", typeof(string), typeof(SELabel));
-
-        public string SxValue
+        public object SeValue
         {
-            get { return (string)GetValue(SxValueProperty); }
+            get { return GetValue(SeValueProperty); }
             set
             {
-                SetValue(SxValueProperty, value);
-                _status = SELabelStatus.Default;
-                ChangeSELabelFunction();
+                SetValue(SeValueProperty, value);
             }
         }
-
 
         enum SELabelStatus
         {
             Default,
             Selected,
             Editing
+        }
+
+        private void WL(string str)
+        {
+            str = DateTime.Now.ToString("mm:ss",CultureInfo.CurrentCulture) + " " + str;
+            Console.WriteLine(str);
         }
     }
 
