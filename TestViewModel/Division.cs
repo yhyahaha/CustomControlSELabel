@@ -54,26 +54,14 @@ namespace TestViewModel
             }
         }
 
-        private Type _DataType;
-        public Type DataType
-        {
-            get { return _DataType; }
-            set
-            {
-                if (value == _DataType) return;
-                _DataType = value;
-            }
-        }
-
         // コンストラクター
         public Division(int code, string displayString, string sortKey, 
-                        string searchKeys, Type dataType)
+                        string searchKeys)
         {
             this.ItemValue = code;
             this.DisplayString = displayString;
             this.SortKey = sortKey;
             this.SearchKeys = searchKeys;
-            this.DataType = dataType;
         }
 
         public override string ToString()

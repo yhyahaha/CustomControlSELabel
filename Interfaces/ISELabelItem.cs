@@ -32,9 +32,5 @@ namespace Interfaces
         /// </summary>
         string SearchKeys { get; set; }
 
-        /// <summary>
-        /// DisplayStringのフォーマットに利用
-        /// </summary>
-        Type DataType { get; set; }
     }
 }
