@@ -18,10 +18,20 @@ namespace SELabelControl
 {
     public class SELabel : Control
     {
-        // フィールド
-        SELabelStatus _status = SELabelStatus.Default;
-        Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;       
 
+     /***************************
+        フィールド
+     ****************************/
+
+        enum SELabelStatus { Default, Selected, Editing }           // コントロールの状態
+        SELabelStatus _status = SELabelStatus.Default;
+
+        Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;   // コントロールがフォーカスを得ている状態の背景色
+
+
+     /***************************
+        コンストラクター
+     ****************************/
         static SELabel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SELabel), new FrameworkPropertyMetadata(typeof(SELabel)));
@@ -38,12 +48,32 @@ namespace SELabelControl
         }
 
 
-        // SELabel本体のEvent
+        /***************************
+            SELabel本体のEvent
+        ****************************/
+
+        // --- Initialize ---
+        
+        // -> static SELabel()
+        // -> public SELabel()
+
+        public override void OnApplyTemplate()
+        {
+            WL("public override void OnApplyTemplate");
+
+            base.OnApplyTemplate();
+
+            labelItemElement = GetTemplateChild("labelItem") as Label;
+            textBoxKeywordElement = GetTemplateChild("textBoxKeyword") as TextBox;
+        }
 
         private void SELabel_Loaded(object sender, RoutedEventArgs e)
         {
             ResetControl();
         }
+
+
+        // --- MouseEvent ---
 
         private void SELabel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -54,6 +84,17 @@ namespace SELabelControl
             // → SELabel_IsKeyboardFocusWithinChanged ... _status is selected
             // → ChangeSELabelFunction
         }
+
+        // -> SELabel_PreviewMouseDown
+        // -> SELabel_IsKeyboardFocusWithinChanged
+        // -> SELabel_PreviewMouseLeftButtonUp
+        // -> SELabel_PreviewMouseUp  
+
+        // ×　SELabel_MouseDown  
+        // ×　SELabel_MouseUp
+
+
+        // --- KeyEvent ---
         private void SELabel_KeyDown(object sender, KeyEventArgs e)
         {
             // Delete で Item を削除(Null)
@@ -66,6 +107,8 @@ namespace SELabelControl
                 ChangeSELabelFunction();
             }
         }
+
+        // --- KeybordFocusEvent ---
 
         private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -92,7 +135,9 @@ namespace SELabelControl
         }
 
 
-        // Private Methods
+     /***************************
+         Private Methods
+     ****************************/
 
         void ChangeSELabelFunction()
         {
@@ -140,16 +185,9 @@ namespace SELabelControl
 
 
 
-        // Elementsの定義
-        public override void OnApplyTemplate()
-        {
-            WL("public override void OnApplyTemplate");
-
-            base.OnApplyTemplate();
-
-            labelItemElement = GetTemplateChild("labelItem") as Label;
-            textBoxKeywordElement = GetTemplateChild("textBoxKeyword") as TextBox;
-        }
+     /***************************
+         Elements の定義
+     ****************************/
 
         private Label _labelItemElement;
         private Label labelItemElement
@@ -171,25 +209,38 @@ namespace SELabelControl
             }
         }
 
-        // 依存関係プロパティの定義
+       
+     /****************************
+        依存関係プロパティの定義
+     *****************************/
+
+        // SeValue ( ISELabelItem ) 定義上はISELabelItemが使えなかったのでobject型
         public static readonly DependencyProperty SeValueProperty =
             DependencyProperty.Register("SeValue", typeof(object), typeof(SELabel));
 
         public object SeValue
         {
             get { return GetValue(SeValueProperty); }
-            set
-            {
-                SetValue(SeValueProperty, value);
-            }
+            set { SetValue(SeValueProperty, value); }
         }
 
-        enum SELabelStatus
+        // 検索してリストから選択するか、入力値をISELabelオブジェクトとして返すか
+        public static readonly DependencyProperty IsSeValueFromListProperty =
+            DependencyProperty.Register("IsSeValueFromList", typeof(bool), typeof(SELabel));
+
+        public bool IsSeValueFromList
         {
-            Default,
-            Selected,
-            Editing
+            get { return (bool)GetValue(IsSeValueFromListProperty); }
+            set { SetValue(IsSeValueFromListProperty, value); }
         }
+
+        // 検索リスト 
+        // ListISELabelItems
+
+
+     /***************************
+         開発用 Method
+     ****************************/
 
         private void WL(string str)
         {

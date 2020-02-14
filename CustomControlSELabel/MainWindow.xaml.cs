@@ -37,12 +37,13 @@ namespace CustomControlSELabel
             
             if(_viewModel.Item != null)
             {
-                //message.Text = _viewModel.Item.ToString();
+                message.Text += Environment.NewLine;
+                message.Text += "Code: " +_viewModel.Item.Code + Environment.NewLine;
+                message.Text += "Disp: " + _viewModel.Item.DisplayString + Environment.NewLine;
+                message.Text += "SortKey: " + _viewModel.Item.SortKey + Environment.NewLine;
+                message.Text += "SearchKey: " + _viewModel.Item.SearchKeys + Environment.NewLine;
+                message.Text += "DataType: " + _viewModel.Item.DataType + Environment.NewLine;
 
-            }
-            else
-            {
-                //message.Text = "";
             }
         }
     }
