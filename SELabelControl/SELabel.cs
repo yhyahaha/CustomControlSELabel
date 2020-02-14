@@ -36,14 +36,24 @@ namespace SELabelControl
             this.PreviewMouseLeftButtonDown += SELabel_PreviewMouseLeftButtonDown;
         }
 
+        // SELabel本体のEvent
+
+        private void SELabel_Loaded(object sender, RoutedEventArgs e)
+        {
+            ResetControl();
+        }
+
         private void SELabel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             WL("SELabel_PreviewMouseLeftButtonDown");
+
+            this.Focus();
 
             if (SeValue != null)
             {
                 _status = SELabelStatus.Selected;
                 ChangeSELabelFunction();
+                
             }
             else
             {
@@ -53,11 +63,6 @@ namespace SELabelControl
 
             WL(_status.ToString());
 
-        }
-
-        private void SELabel_Loaded(object sender, RoutedEventArgs e)
-        {
-            ResetControl();
         }
 
         private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -83,6 +88,8 @@ namespace SELabelControl
                 ChangeSELabelFunction();
             }
         }
+
+        // Private Methods
 
         void ChangeSELabelFunction()
         {
@@ -122,6 +129,8 @@ namespace SELabelControl
             _status = SELabelStatus.Default;
             ChangeSELabelFunction();
         }
+
+
 
         // Elementsの定義
         public override void OnApplyTemplate()
