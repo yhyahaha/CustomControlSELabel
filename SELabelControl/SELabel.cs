@@ -34,7 +34,9 @@ namespace SELabelControl
 
             this.Loaded += SELabel_Loaded;
             this.PreviewMouseLeftButtonDown += SELabel_PreviewMouseLeftButtonDown;
+            this.KeyDown += SELabel_KeyDown;
         }
+
 
         // SELabel本体のEvent
 
@@ -49,20 +51,20 @@ namespace SELabelControl
 
             this.Focus();
 
-            if (SeValue != null)
+            // → SELabel_IsKeyboardFocusWithinChanged ... _status is selected
+            // → ChangeSELabelFunction
+        }
+        private void SELabel_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Delete で Item を削除(Null)
+            if (e.Key == Key.Delete)
             {
-                _status = SELabelStatus.Selected;
-                ChangeSELabelFunction();
-                
-            }
-            else
-            {
+                WL("Esc");
+
+                SeValue = null;
                 _status = SELabelStatus.Editing;
                 ChangeSELabelFunction();
             }
-
-            WL(_status.ToString());
-
         }
 
         private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -89,10 +91,13 @@ namespace SELabelControl
             }
         }
 
+
         // Private Methods
 
         void ChangeSELabelFunction()
         {
+            WL("ChangeSELabelFunction");
+            
             switch (_status)
             {
                 case SELabelStatus.Selected:
@@ -108,6 +113,9 @@ namespace SELabelControl
 
                     textBoxKeywordElement.Visibility = Visibility.Visible;
                     textBoxKeywordElement.Background = backgroundBrushControlHasFocus;
+
+                    textBoxKeywordElement.Focus();
+                    textBoxKeywordElement.SelectAll();
 
                     break;
 

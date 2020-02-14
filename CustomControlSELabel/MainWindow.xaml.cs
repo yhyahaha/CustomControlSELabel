@@ -29,5 +29,21 @@ namespace CustomControlSELabel
             InitializeComponent();
             this.DataContext = _viewModel;
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            message.Text = "Is Item Null? " + (_viewModel.Item == null).ToString();
+            
+            
+            if(_viewModel.Item != null)
+            {
+                //message.Text = _viewModel.Item.ToString();
+
+            }
+            else
+            {
+                //message.Text = "";
+            }
+        }
     }
 }

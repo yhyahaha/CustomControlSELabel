@@ -18,7 +18,7 @@ namespace TestViewModel
         {
             CreateDivisionsSampleData();
             Item = null;
-            //Item = Items[1];
+            Item = Items[1];
         }
 
         private ISELabelItem _Item;
