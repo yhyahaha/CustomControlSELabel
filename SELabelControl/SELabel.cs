@@ -184,6 +184,8 @@ namespace SELabelControl
         {
             _status = SELabelStatus.Default;
             ChangeSELabelFunction();
+
+            WL(SeItemsList.Count.ToString());
         }
 
 
