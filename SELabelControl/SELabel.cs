@@ -33,6 +33,26 @@ namespace SELabelControl
             this.IsKeyboardFocusWithinChanged += SELabel_IsKeyboardFocusWithinChanged;
 
             this.Loaded += SELabel_Loaded;
+            this.PreviewMouseLeftButtonDown += SELabel_PreviewMouseLeftButtonDown;
+        }
+
+        private void SELabel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            WL("SELabel_PreviewMouseLeftButtonDown");
+
+            if (SeValue != null)
+            {
+                _status = SELabelStatus.Selected;
+                ChangeSELabelFunction();
+            }
+            else
+            {
+                _status = SELabelStatus.Editing;
+                ChangeSELabelFunction();
+            }
+
+            WL(_status.ToString());
+
         }
 
         private void SELabel_Loaded(object sender, RoutedEventArgs e)
@@ -42,6 +62,8 @@ namespace SELabelControl
 
         private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            WL("SELabel_IsKeyboardFocusWithinChanged");
+            
             if (this.IsKeyboardFocusWithin)
             {
                 if(SeValue != null)
