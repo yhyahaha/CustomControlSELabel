@@ -10,9 +10,9 @@ namespace Interfaces
     public interface ISELabelItem
     {       
         /// <summary>
-        /// オブジェクトのID
+        /// オブジェクトのID, MasterCode, StringValue, DateTimeValue etc..
         /// </summary>
-        int Code { get; set; }
+        object ItemValue { get; set; }
 
         /// <summary>
         /// SELabelにObjectが設定されている時に表示される文字列

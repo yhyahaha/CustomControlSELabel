@@ -10,14 +10,14 @@ namespace TestViewModel
 {
     public class Division : ISELabelItem
     {
-        private int _Code;
-        public int Code
+        private object _ItemValue;
+        public object ItemValue
         {
-            get { return this._Code; }
+            get { return this._ItemValue; }
             set
             {
-                if (value == _Code) return;
-                _Code = value;
+                if (value == _ItemValue) return;
+                _ItemValue = value;
             }
         }
 
@@ -69,7 +69,7 @@ namespace TestViewModel
         public Division(int code, string displayString, string sortKey, 
                         string searchKeys, Type dataType)
         {
-            this.Code = code;
+            this.ItemValue = code;
             this.DisplayString = displayString;
             this.SortKey = sortKey;
             this.SearchKeys = searchKeys;
