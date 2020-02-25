@@ -48,13 +48,123 @@ namespace SELabelControl
             this.KeyDown += SELabel_KeyDown;
         }
 
+        /***************************
+            Elements の定義
+        ****************************/
 
-     /***************************
-            SELabel本体のEvent
-     ****************************/
+        private Label _labelItemElement;
+        private Label labelItemElement
+        {
+            get { return _labelItemElement; }
+            set
+            {
+                _labelItemElement = value;
+            }
+        }
+
+        private TextBox _textBoxKeywordElement;
+        private TextBox textBoxKeywordElement
+        {
+            get { return _textBoxKeywordElement; }
+            set
+            {
+                _textBoxKeywordElement = value;
+            }
+        }
+
+
+        /****************************
+           依存関係プロパティの定義
+        *****************************/
+
+        // SeValue ( ISELabelItem ) 定義上はISELabelItemが使えなかったのでobject型
+        public static readonly DependencyProperty SeValueProperty =
+            DependencyProperty.Register("SeValue", typeof(object), typeof(SELabel));
+
+        public object SeValue
+        {
+            get { return GetValue(SeValueProperty); }
+            set { SetValue(SeValueProperty, value); }
+        }
+
+        // 検索してリストから選択するか、入力値をISELabelオブジェクトとして返すか
+        public static readonly DependencyProperty IsSeValueFromListProperty =
+            DependencyProperty.Register("IsSeValueFromList", typeof(bool), typeof(SELabel));
+
+        public bool IsSeValueFromList
+        {
+            get { return (bool)GetValue(IsSeValueFromListProperty); }
+            set { SetValue(IsSeValueFromListProperty, value); }
+        }
+
+        // 検索用リストの受取
+        public static readonly DependencyProperty SeItemsListProperty =
+            DependencyProperty.Register("SeItemsList", typeof(List<object>), typeof(SELabel));
+
+        public List<object> SeItemsList
+        {
+            get { return (List<object>)GetValue(SeItemsListProperty); }
+            set { SetValue(SeItemsListProperty, value); }
+        }
+
+
+        /***************************
+            Private Methods
+        ****************************/
+
+        void ResetControl()
+        {
+            _status = SELabelStatus.Default;
+            ChangeSELabelFunction();
+
+            //WL(SeItemsList.Count.ToString());
+        }
+
+        void ChangeSELabelFunction()
+        {
+            WL("ChangeSELabelFunction");
+
+            switch (_status)
+            {
+                case SELabelStatus.Selected:
+                    labelItemElement.Visibility = Visibility.Visible;
+                    labelItemElement.Background = backgroundBrushControlHasFocus;
+
+                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
+
+                    break;
+
+                case SELabelStatus.Editing:
+                    labelItemElement.Visibility = Visibility.Collapsed;
+
+                    textBoxKeywordElement.Visibility = Visibility.Visible;
+                    textBoxKeywordElement.Background = backgroundBrushControlHasFocus;
+
+                    textBoxKeywordElement.Focus();
+                    textBoxKeywordElement.SelectAll();
+
+                    break;
+
+                case SELabelStatus.Default:
+                    labelItemElement.Visibility = Visibility.Visible;
+                    labelItemElement.Background = Brushes.Transparent;
+
+                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+        /***************************
+               SELabel本体のEvent
+        ****************************/
 
         // --- Initialize ---
-        
+
         // -> static SELabel()
         // -> public SELabel()
 
@@ -135,119 +245,6 @@ namespace SELabelControl
             }
         }
 
-
-        public int myInteger { get; set; }
-
-     /***************************
-         Private Methods
-     ****************************/
-
-        void ChangeSELabelFunction()
-        {
-            WL("ChangeSELabelFunction");
-            
-            switch (_status)
-            {
-                case SELabelStatus.Selected:
-                    labelItemElement.Visibility = Visibility.Visible;
-                    labelItemElement.Background = backgroundBrushControlHasFocus;
-
-                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
-
-                    break;
-
-                case SELabelStatus.Editing:
-                    labelItemElement.Visibility = Visibility.Collapsed;
-
-                    textBoxKeywordElement.Visibility = Visibility.Visible;
-                    textBoxKeywordElement.Background = backgroundBrushControlHasFocus;
-
-                    textBoxKeywordElement.Focus();
-                    textBoxKeywordElement.SelectAll();
-
-                    break;
-
-                case SELabelStatus.Default:
-                    labelItemElement.Visibility = Visibility.Visible;
-                    labelItemElement.Background = Brushes.Transparent;
-
-                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
-                    
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        void ResetControl()
-        {
-            _status = SELabelStatus.Default;
-            ChangeSELabelFunction();
-
-            WL(SeItemsList.Count.ToString());
-        }
-
-
-
-     /***************************
-         Elements の定義
-     ****************************/
-
-        private Label _labelItemElement;
-        private Label labelItemElement
-        {
-            get { return _labelItemElement; }
-            set
-            {
-                _labelItemElement = value;
-            }
-        }
-
-        private TextBox _textBoxKeywordElement;
-        private TextBox textBoxKeywordElement
-        {
-            get { return _textBoxKeywordElement; }
-            set
-            {
-                _textBoxKeywordElement = value;
-            }
-        }
-
-       
-     /****************************
-        依存関係プロパティの定義
-     *****************************/
-
-        // SeValue ( ISELabelItem ) 定義上はISELabelItemが使えなかったのでobject型
-        public static readonly DependencyProperty SeValueProperty =
-            DependencyProperty.Register("SeValue", typeof(object), typeof(SELabel));
-
-        public object SeValue
-        {
-            get { return GetValue(SeValueProperty); }
-            set { SetValue(SeValueProperty, value); }
-        }
-
-        // 検索してリストから選択するか、入力値をISELabelオブジェクトとして返すか
-        public static readonly DependencyProperty IsSeValueFromListProperty =
-            DependencyProperty.Register("IsSeValueFromList", typeof(bool), typeof(SELabel));
-
-        public bool IsSeValueFromList
-        {
-            get { return (bool)GetValue(IsSeValueFromListProperty); }
-            set { SetValue(IsSeValueFromListProperty, value); }
-        }
-
-        // 検索用リストの受取
-        public static readonly DependencyProperty SeItemsListProperty =
-            DependencyProperty.Register("SeItemsList", typeof(List<object>), typeof(SELabel));
-
-        public List<object> SeItemsList
-        {
-            get { return (List<object>)GetValue(SeItemsListProperty); }
-            set { SetValue(SeItemsListProperty, value); }
-        }
 
      /***************************
             開発用 Method
