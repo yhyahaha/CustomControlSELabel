@@ -46,6 +46,8 @@ namespace SELabelControl
             this.Loaded += SELabel_Loaded;
             this.PreviewMouseLeftButtonDown += SELabel_PreviewMouseLeftButtonDown;
             this.KeyDown += SELabel_KeyDown;
+
+            //System.Diagnostics.Debug.WriteLine("SelItems" + SelItems.Count);
         }
 
         /***************************
@@ -74,7 +76,7 @@ namespace SELabelControl
 
 
         /****************************
-           依存関係プロパティの定義
+           依存関係プロパティ
         *****************************/
 
         // SeValue ( ISELabelItem ) 定義上はISELabelItemが使えなかったのでobject型
@@ -96,6 +98,24 @@ namespace SELabelControl
             get { return (bool)GetValue(IsSeValueFromListProperty); }
             set { SetValue(IsSeValueFromListProperty, value); }
         }
+
+
+        /****************************
+           プロパティ
+        *****************************/
+
+        // SelItems又はSelObjectの設定は必須
+
+        /// <summary>
+        /// 選択候補
+        /// </summary>
+        public List<ISELabelItem> SelItems { get; set; }
+
+        /// <summary>
+        /// 入力値をValueとするオブジェクト
+        /// </summary>
+        public ISELabelItem SelObject { get; set; }
+
 
 
         /***************************
@@ -169,7 +189,16 @@ namespace SELabelControl
 
         private void SELabel_Loaded(object sender, RoutedEventArgs e)
         {
+            // SelItems か SelObject を指定していなければならない
+            if((SelItems == null) && (SelObject == null))
+            {
+                throw new Exception("SelItems か SelObject を指定していなければならない");
+            }
+            
+            
             ResetControl();
+            System.Diagnostics.Debug.WriteLine("SelItems"  + (SelItems == null));
+            System.Diagnostics.Debug.WriteLine("SelObject" + (SelObject == null));
         }
 
 

@@ -9,7 +9,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
-                        <Label x:Name="labelItem" Content="{ Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:SELabel}},Path=SeValue }" />
+                        <Label x:Name="labelItem" />
                         <TextBox x:Name="textBoxKeyword"/>
                     </Grid>
                 </ControlTemplate>

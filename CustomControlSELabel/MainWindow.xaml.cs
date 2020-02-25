@@ -23,27 +23,14 @@ namespace CustomControlSELabel
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ViewModel _viewModel = new ViewModel();
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = _viewModel;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            message.Text = "Is Item Null? " + (_viewModel.Item == null).ToString(System.Globalization.CultureInfo.CurrentCulture);
-            
-            
-            if(_viewModel.Item != null)
-            {
-                message.Text += Environment.NewLine;
-                message.Text += "ItemValue: " +_viewModel.Item.ItemValue + Environment.NewLine;
-                message.Text += "Disp: " + _viewModel.Item.DisplayString + Environment.NewLine;
-                message.Text += "SortKey: " + _viewModel.Item.SortKey + Environment.NewLine;
-                message.Text += "SearchKey: " + _viewModel.Item.SearchKeys + Environment.NewLine;
-
-            }
+            //message.Text= _viewModel.Item==null ? "Item is null" : _viewModel.Item.ToString();
         }
     }
 }

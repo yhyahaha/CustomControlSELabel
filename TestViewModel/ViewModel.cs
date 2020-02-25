@@ -11,18 +11,18 @@ namespace TestViewModel
 
     public class ViewModel
     {
-        public ObservableCollection<ISELabelItem> Items { get; }
-        = new ObservableCollection<ISELabelItem>();
+        public static List<ISELabelItem> SelItems { get; private set; }
+        = new List<ISELabelItem>();
 
         public ViewModel()
         {
             CreateDivisionsSampleData();
             Item = null;
-            Item = Items[1];
+            Item = SelItems[1].ItemValue.ToString();
         }
 
-        private ISELabelItem _Item;
-        public ISELabelItem Item
+        private object _Item;
+        public object Item
         {
             get { return _Item; }
             set
@@ -40,11 +40,11 @@ namespace TestViewModel
             var dev4 = new SelDivision(14000, "撮影", "140", " 14000 ｻﾂｴｲ");
             var dev5 = new SelDivision(15000, "照明", "150", " 15000 ｼｮｳﾒｲ");
 
-            Items.Add(dev1);
-            Items.Add(dev2);
-            Items.Add(dev3);
-            Items.Add(dev4);
-            Items.Add(dev5);
+            SelItems.Add(dev1);
+            SelItems.Add(dev2);
+            SelItems.Add(dev3);
+            SelItems.Add(dev4);
+            SelItems.Add(dev5);
         }
     }
 }
