@@ -8,7 +8,7 @@ using Interfaces;
 
 namespace TestViewModel
 {
-    public class Division : ISELabelItem
+    public class SelDivision : ISELabelItem
     {
         private object _ItemValue;
         public object ItemValue
@@ -55,7 +55,7 @@ namespace TestViewModel
         }
 
         // コンストラクター
-        public Division(int code, string displayString, string sortKey, 
+        public SelDivision(int code, string displayString, string sortKey, 
                         string searchKeys)
         {
             this.ItemValue = code;
