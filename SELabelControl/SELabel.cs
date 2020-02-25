@@ -29,7 +29,6 @@ namespace SELabelControl
 
         Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;   // コントロールがフォーカスを得ている状態の背景色
 
-
      /***************************
         コンストラクター
      ****************************/
@@ -104,30 +103,29 @@ namespace SELabelControl
 
         void ResetControl()
         {
-            _status = SELabelStatus.Default;
-            ChangeSELabelFunction();
-
-            labelItemElement.Content = GetDisplayStringFromItemValue(SeValue);
-
+            SetDisplayString(SeValue);
+            UpdateSeLabelStatus(SELabelStatus.Default);
         }
 
-        string GetDisplayStringFromItemValue(string value)
+        void SetDisplayString(string value)
         {
             string displayString = string.Empty;
 
             var item = SeItems.Where(x => x.ItemValue == value).FirstOrDefault();
             if (item != null)
             {
-                displayString = item.DisplayString;
+                displayString = item.ToString();
             }
 
-            return displayString;
+            labelItemElement.Content = displayString;
 
         }
 
-        void ChangeSELabelFunction()
+        void UpdateSeLabelStatus(SELabelStatus status)
         {
             WL("ChangeSELabelFunction");
+
+            _status = status;
 
             switch (_status)
             {
@@ -227,12 +225,14 @@ namespace SELabelControl
             // Delete で Item を削除(Null)
             if (e.Key == Key.Delete)
             {
-                WL("Esc");
+                WL("Del");
 
                 SeValue = string.Empty;
-                _status = SELabelStatus.Editing;
-                ChangeSELabelFunction();
+                SetDisplayString(SeValue);
+                UpdateSeLabelStatus(SELabelStatus.Editing);
             }
+
+
         }
 
         // --- KeybordFocusEvent ---
@@ -243,21 +243,18 @@ namespace SELabelControl
             
             if (this.IsKeyboardFocusWithin)
             {
-                if (string.IsNullOrEmpty(SeValue))
+                if (!string.IsNullOrEmpty(SeValue))
                 {
-                    _status = SELabelStatus.Selected;
-                    ChangeSELabelFunction();
+                    UpdateSeLabelStatus(SELabelStatus.Selected);
                 }
                 else
                 {
-                    _status = SELabelStatus.Editing;
-                    ChangeSELabelFunction();
+                    UpdateSeLabelStatus(SELabelStatus.Editing);
                 }
             }
             else
             {
-                _status = SELabelStatus.Default;    
-                ChangeSELabelFunction();
+                UpdateSeLabelStatus(SELabelStatus.Default);
             }
         }
 
