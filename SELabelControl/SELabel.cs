@@ -81,13 +81,13 @@ namespace SELabelControl
 
         // SeValue ( ISELabelItem ) 定義上はISELabelItemが使えなかったのでobject型
         public static readonly DependencyProperty SeValueProperty =
-            DependencyProperty.Register("SeValue", typeof(object), typeof(SELabel));
+            DependencyProperty.Register("SeValue", typeof(string), typeof(SELabel));
 
-        public object SeValue
+        public string SeValue
         {
             get
             { 
-                return GetValue(SeValueProperty); 
+                return (string)GetValue(SeValueProperty); 
             }
             set
             { 
@@ -133,15 +133,21 @@ namespace SELabelControl
             _status = SELabelStatus.Default;
             ChangeSELabelFunction();
 
+            labelItemElement.Content = GetDisplayStringFromItemValue(SeValue);
+
+        }
+
+        string GetDisplayStringFromItemValue(string value)
+        {
             string displayString = string.Empty;
-            
-            var item = SelItems.Where(x => x.ItemValue == SeValue).FirstOrDefault();
+
+            var item = SelItems.Where(x => x.ItemValue == value).FirstOrDefault();
             if (item != null)
             {
                 displayString = item.DisplayString;
             }
-            labelItemElement.Content = displayString;
 
+            return displayString;
 
         }
 
