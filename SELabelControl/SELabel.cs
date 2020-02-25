@@ -97,16 +97,6 @@ namespace SELabelControl
             set { SetValue(IsSeValueFromListProperty, value); }
         }
 
-        // 検索用リストの受取
-        public static readonly DependencyProperty SeItemsListProperty =
-            DependencyProperty.Register("SeItemsList", typeof(List<object>), typeof(SELabel));
-
-        public List<object> SeItemsList
-        {
-            get { return (List<object>)GetValue(SeItemsListProperty); }
-            set { SetValue(SeItemsListProperty, value); }
-        }
-
 
         /***************************
             Private Methods
@@ -117,7 +107,6 @@ namespace SELabelControl
             _status = SELabelStatus.Default;
             ChangeSELabelFunction();
 
-            //WL(SeItemsList.Count.ToString());
         }
 
         void ChangeSELabelFunction()
