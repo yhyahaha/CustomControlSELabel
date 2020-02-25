@@ -30,7 +30,8 @@ namespace CustomControlSELabel
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            //message.Text= _viewModel.Item==null ? "Item is null" : _viewModel.Item.ToString();
+            var vm = (ViewModel)this.DataContext;
+            message.Text= vm.Item==null ? "Item is null" : vm.Item.ToString();
         }
     }
 }

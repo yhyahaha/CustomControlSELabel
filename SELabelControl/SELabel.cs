@@ -79,49 +79,23 @@ namespace SELabelControl
            依存関係プロパティ
         *****************************/
 
-        // SeValue ( ISELabelItem ) 定義上はISELabelItemが使えなかったのでobject型
         public static readonly DependencyProperty SeValueProperty =
             DependencyProperty.Register("SeValue", typeof(string), typeof(SELabel));
 
         public string SeValue
         {
-            get
-            { 
-                return (string)GetValue(SeValueProperty); 
-            }
-            set
-            { 
-                SetValue(SeValueProperty, value);
-            }
+            get { return (string)GetValue(SeValueProperty); }
+            set { SetValue(SeValueProperty, value); }
         }
-
-        // 検索してリストから選択するか、入力値をISELabelオブジェクトとして返すか
-        public static readonly DependencyProperty IsSeValueFromListProperty =
-            DependencyProperty.Register("IsSeValueFromList", typeof(bool), typeof(SELabel));
-
-        public bool IsSeValueFromList
-        {
-            get { return (bool)GetValue(IsSeValueFromListProperty); }
-            set { SetValue(IsSeValueFromListProperty, value); }
-        }
-
 
         /****************************
            プロパティ
         *****************************/
 
-        // SelItems又はSelObjectの設定は必須
-
         /// <summary>
-        /// 選択候補
+        /// 選択候補 / 設定必須
         /// </summary>
-        public List<ISELabelItem> SelItems { get; set; }
-
-        /// <summary>
-        /// 入力値をValueとするオブジェクト
-        /// </summary>
-        public ISELabelItem SelObject { get; set; }
-
+        public List<ISELabelItem> SeItems { get; set; }
 
 
         /***************************
@@ -141,7 +115,7 @@ namespace SELabelControl
         {
             string displayString = string.Empty;
 
-            var item = SelItems.Where(x => x.ItemValue == value).FirstOrDefault();
+            var item = SeItems.Where(x => x.ItemValue == value).FirstOrDefault();
             if (item != null)
             {
                 displayString = item.DisplayString;
@@ -212,17 +186,19 @@ namespace SELabelControl
         private void SELabel_Loaded(object sender, RoutedEventArgs e)
         {
             // SelItems か SelObject を指定していなければならない
-            if((SelItems == null) && (SelObject == null))
+            if(SeItems == null)
             {
-                throw new Exception("SelItems か SelObject を指定していなければならない");
+                throw new Exception("SelItemsを指定していなければならない");
             }
             
+            if (SeValue == null)
+            {
+                //throw new Exception("SeValueはNullであってはならない");
+                SeValue = string.Empty;
+            }
             
             ResetControl();
-            System.Diagnostics.Debug.WriteLine("SelItems"  + (SelItems == null));
-            System.Diagnostics.Debug.WriteLine("SelObject" + (SelObject == null));
         }
-
 
         // --- MouseEvent ---
 
@@ -253,7 +229,7 @@ namespace SELabelControl
             {
                 WL("Esc");
 
-                SeValue = null;
+                SeValue = string.Empty;
                 _status = SELabelStatus.Editing;
                 ChangeSELabelFunction();
             }
@@ -267,7 +243,7 @@ namespace SELabelControl
             
             if (this.IsKeyboardFocusWithin)
             {
-                if(SeValue != null)
+                if (string.IsNullOrEmpty(SeValue))
                 {
                     _status = SELabelStatus.Selected;
                     ChangeSELabelFunction();

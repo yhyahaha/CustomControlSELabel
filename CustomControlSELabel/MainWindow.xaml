@@ -28,7 +28,7 @@
         <!--SELable-->
         <local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1" 
                        SeValue="{Binding Item, Mode=TwoWay }"
-                       SelItems="{x:Static vm:ViewModel.SelItems}"/>
+                       SeItems="{x:Static vm:ViewModel.SeItems}"/>
 
         <TextBox Grid.Row="2" Grid.Column="1" Text="Dummy TextBox2" Background="PaleGreen"/>
         <Button x:Name="button" Content="Button" Click="button_Click"/>

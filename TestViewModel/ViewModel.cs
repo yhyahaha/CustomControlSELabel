@@ -11,14 +11,15 @@ namespace TestViewModel
 
     public class ViewModel
     {
-        public static List<ISELabelItem> SelItems { get; private set; }
+        public static List<ISELabelItem> SeItems { get; private set; }
         = new List<ISELabelItem>();
 
         public ViewModel()
         {
             CreateDivisionsSampleData();
             Item = null;
-            Item = SelItems[1].ItemValue;
+            Item = string.Empty;
+            Item = SeItems[1].ItemValue;
         }
 
         private object _Item;
@@ -39,11 +40,11 @@ namespace TestViewModel
             var dev4 = new SelDivision("14000", "撮影", "140", " 14000 ｻﾂｴｲ");
             var dev5 = new SelDivision("15000", "照明", "150", " 15000 ｼｮｳﾒｲ");
 
-            SelItems.Add(dev1);
-            SelItems.Add(dev2);
-            SelItems.Add(dev3);
-            SelItems.Add(dev4);
-            SelItems.Add(dev5);
+            SeItems.Add(dev1);
+            SeItems.Add(dev2);
+            SeItems.Add(dev3);
+            SeItems.Add(dev4);
+            SeItems.Add(dev5);
         }
     }
 }
