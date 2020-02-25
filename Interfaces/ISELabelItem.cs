@@ -12,7 +12,7 @@ namespace Interfaces
         /// <summary>
         /// オブジェクトのID, MasterCode, StringValue, DateTimeValue etc..
         /// </summary>
-        object ItemValue { get; set; }
+        string ItemValue { get; set; }
 
         /// <summary>
         /// SELabelにObjectが設定されている時に表示される文字列

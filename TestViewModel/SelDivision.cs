@@ -10,8 +10,8 @@ namespace TestViewModel
 {
     public class SelDivision : ISELabelItem
     {
-        private object _ItemValue;
-        public object ItemValue
+        private string _ItemValue;
+        public string ItemValue
         {
             get { return this._ItemValue; }
             set
@@ -55,7 +55,7 @@ namespace TestViewModel
         }
 
         // コンストラクター
-        public SelDivision(int code, string displayString, string sortKey, 
+        public SelDivision(string code, string displayString, string sortKey, 
                         string searchKeys)
         {
             this.ItemValue = code;

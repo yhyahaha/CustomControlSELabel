@@ -85,8 +85,14 @@ namespace SELabelControl
 
         public object SeValue
         {
-            get { return GetValue(SeValueProperty); }
-            set { SetValue(SeValueProperty, value); }
+            get
+            { 
+                return GetValue(SeValueProperty); 
+            }
+            set
+            { 
+                SetValue(SeValueProperty, value);
+            }
         }
 
         // 検索してリストから選択するか、入力値をISELabelオブジェクトとして返すか
@@ -126,6 +132,16 @@ namespace SELabelControl
         {
             _status = SELabelStatus.Default;
             ChangeSELabelFunction();
+
+            string displayString = string.Empty;
+            
+            var item = SelItems.Where(x => x.ItemValue == SeValue).FirstOrDefault();
+            if (item != null)
+            {
+                displayString = item.DisplayString;
+            }
+            labelItemElement.Content = displayString;
+
 
         }
 
