@@ -69,8 +69,25 @@ namespace SELabelControl
             get { return _textBoxKeywordElement; }
             set
             {
+                if(_textBoxKeywordElement != null)
+                {
+                    _textBoxKeywordElement.TextChanged -= new TextChangedEventHandler(_textBoxKeywordElement_TextChanged);
+                }
+                
                 _textBoxKeywordElement = value;
+
+                if(_textBoxKeywordElement != null)
+                {
+                    _textBoxKeywordElement.TextChanged += new TextChangedEventHandler(_textBoxKeywordElement_TextChanged);
+                }
+                
             }
+        }
+
+
+        private void _textBoxKeywordElement_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            WL("textBox Changed " + textBoxKeywordElement.Text); ;
         }
 
 
