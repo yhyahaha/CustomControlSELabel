@@ -101,12 +101,14 @@ namespace SELabelControl
             Private Methods
         ****************************/
 
+        // コントロールがフォーカスを持たない時の状態
         void ResetControl()
         {
             SetDisplayString(SeValue);
             UpdateSeLabelStatus(SELabelStatus.Default);
         }
 
+        // SeValueを表示する
         void SetDisplayString(string value)
         {
             string displayString = string.Empty;
@@ -121,9 +123,11 @@ namespace SELabelControl
 
         }
 
+
+        // ElementのVisibility,Backgroud等を操作する
         void UpdateSeLabelStatus(SELabelStatus status)
         {
-            WL("ChangeSELabelFunction");
+            WL("UpdateSeLabelStatus from " + _status.ToString() + " to " + status.ToString() );
 
             _status = status;
 

@@ -32,6 +32,8 @@ namespace CustomControlSELabel
         {
             var vm = (ViewModel)this.DataContext;
             message.Text= vm.Item==null ? "Item is null" : vm.Item.ToString();
+
+            Console.WriteLine();
         }
     }
 }
