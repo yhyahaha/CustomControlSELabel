@@ -26,8 +26,10 @@ namespace SELabelControl
 
         enum SELabelStatus { Default, Selected, Editing }           // コントロールの状態
         SELabelStatus _status = SELabelStatus.Default;
-
+        
         Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;   // コントロールがフォーカスを得ている状態の背景色
+
+        static RomajiToKana kanaConverter = new RomajiToKana();
 
      /***************************
         コンストラクター
@@ -71,14 +73,16 @@ namespace SELabelControl
             {
                 if(_textBoxKeywordElement != null)
                 {
-                    _textBoxKeywordElement.TextChanged -= new TextChangedEventHandler(_textBoxKeywordElement_TextChanged);
+                    _textBoxKeywordElement.TextChanged
+                        -= new TextChangedEventHandler(_textBoxKeywordElement_TextChanged);
                 }
                 
                 _textBoxKeywordElement = value;
 
                 if(_textBoxKeywordElement != null)
                 {
-                    _textBoxKeywordElement.TextChanged += new TextChangedEventHandler(_textBoxKeywordElement_TextChanged);
+                    _textBoxKeywordElement.TextChanged
+                        += new TextChangedEventHandler(_textBoxKeywordElement_TextChanged);
                 }
                 
             }
@@ -87,7 +91,10 @@ namespace SELabelControl
 
         private void _textBoxKeywordElement_TextChanged(object sender, TextChangedEventArgs e)
         {
-            WL("textBox Changed " + textBoxKeywordElement.Text); ;
+            WL("textBox Changed " + textBoxKeywordElement.Text);
+            string str = textBoxKeywordElement.Text;
+            textBoxKeywordElement.Text = kanaConverter.ConvertToKana(str);
+            textBoxKeywordElement.CaretIndex = str.Length;
         }
 
 
