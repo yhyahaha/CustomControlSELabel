@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -59,10 +60,7 @@ namespace SELabelControl
         private Label labelItemElement
         {
             get { return _labelItemElement; }
-            set
-            {
-                _labelItemElement = value;
-            }
+            set { _labelItemElement = value; }
         }
 
         private TextBox _textBoxKeywordElement;
@@ -84,19 +82,22 @@ namespace SELabelControl
                     _textBoxKeywordElement.TextChanged
                         += new TextChangedEventHandler(_textBoxKeywordElement_TextChanged);
                 }
-                
             }
         }
 
-
-        private void _textBoxKeywordElement_TextChanged(object sender, TextChangedEventArgs e)
+        private Popup _popupElement;
+        public Popup popupElement
         {
-            WL("textBox Changed " + textBoxKeywordElement.Text);
-            string str = textBoxKeywordElement.Text;
-            textBoxKeywordElement.Text = kanaConverter.ConvertToKana(str);
-            textBoxKeywordElement.CaretIndex = str.Length;
+            get { return _popupElement; }
+            set { _popupElement = value; }
         }
 
+        private ListBox _listBoxElement;
+        public ListBox listBoxElement
+        {
+            get { return _listBoxElement; }
+            set { _listBoxElement = value; }
+        }
 
         /****************************
            依存関係プロパティ
@@ -163,6 +164,8 @@ namespace SELabelControl
 
                     textBoxKeywordElement.Visibility = Visibility.Collapsed;
 
+                    popupElement.IsOpen = false;
+
                     break;
 
                 case SELabelStatus.Editing:
@@ -182,13 +185,14 @@ namespace SELabelControl
 
                     textBoxKeywordElement.Visibility = Visibility.Collapsed;
 
+                    popupElement.IsOpen = false;
+
                     break;
 
                 default:
                     break;
             }
         }
-
 
         /***************************
                SELabel本体のEvent
@@ -207,6 +211,8 @@ namespace SELabelControl
 
             labelItemElement = GetTemplateChild("labelItem") as Label;
             textBoxKeywordElement = GetTemplateChild("textBoxKeyword") as TextBox;
+            popupElement = GetTemplateChild("popup") as Popup;
+            listBoxElement = GetTemplateChild("listBox") as ListBox;
         }
 
         private void SELabel_Loaded(object sender, RoutedEventArgs e)
@@ -259,8 +265,6 @@ namespace SELabelControl
                 SetDisplayString(SeValue);
                 UpdateSeLabelStatus(SELabelStatus.Editing);
             }
-
-
         }
 
         // --- KeybordFocusEvent ---
@@ -286,10 +290,46 @@ namespace SELabelControl
             }
         }
 
+        /************************************
+               TextBoxKeyWordChangeEvent
+        *************************************/
 
-     /***************************
-            開発用 Method
-     ****************************/
+        private void _textBoxKeywordElement_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Ajust Input
+            string str = kanaConverter.ConvertToKana(textBoxKeywordElement.Text);
+            string keyword = AdjustToKeyword(str);
+            textBoxKeywordElement.Text = keyword;
+            textBoxKeywordElement.CaretIndex = keyword.Length;
+
+            // Search by keyword
+            var candidates = SeItems.Where(x => x.SearchKeys.Contains(" " + keyword)).Select(x => x.DisplayString);
+
+            if(candidates != null)
+            {
+                
+            }
+
+        }
+
+        // 拗音,促音の補正
+        private string AdjustToKeyword (string textString)
+        {
+            string str = textString.Replace('ｧ', 'ｱ')
+                                   .Replace('ｨ', 'ｲ')
+                                   .Replace('ｩ', 'ｳ')
+                                   .Replace('ｪ', 'ｴ')
+                                   .Replace('ｫ', 'ｵ')
+                                   .Replace('ｬ', 'ﾔ')
+                                   .Replace('ｭ', 'ﾕ')
+                                   .Replace('ｮ', 'ﾖ')
+                                   .Replace('ｯ', 'ﾂ');
+            return str;
+        }
+
+        /***************************
+               開発用 Method
+        ****************************/
 
         private void WL(string str)
         {

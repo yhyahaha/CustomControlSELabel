@@ -11,6 +11,11 @@
                     <Grid>
                         <Label x:Name="labelItem" />
                         <TextBox x:Name="textBoxKeyword"/>
+                        <Popup x:Name="popup">
+                            <ScrollViewer>
+                                <ListBox x:Name="listBox"/>
+                            </ScrollViewer>
+                        </Popup>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
