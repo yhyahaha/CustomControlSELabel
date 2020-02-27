@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SELabelControl;assembly=SELabelControl"
         xmlns:vm="clr-namespace:TestViewModel;assembly=TestViewModel"
+        xmlns:conv="clr-namespace:ConverterRomanLettersToKana;assembly=ConverterRomanLettersToKana"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="400">
     <Window.DataContext>
         <vm:ViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <conv:RomajiToKana x:Key="kanaConv"/>
+    </Window.Resources>
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -28,7 +32,8 @@
         <!--SELable-->
         <local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1" 
                        SeValue="{Binding Item, Mode=TwoWay }"
-                       SeItems="{x:Static vm:ViewModel.SeItems}"/>
+                       SeItems="{x:Static vm:ViewModel.SeItems}"
+                       KanaConverter="{StaticResource kanaConv}"/>
 
         <TextBox Grid.Row="2" Grid.Column="1" Text="Dummy TextBox2" Background="PaleGreen"/>
         <Button x:Name="button" Content="Button" Click="button_Click"/>

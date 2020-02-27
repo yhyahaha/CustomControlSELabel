@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ConverterRomanLettersToKana;
+using InterfaceKanaConverter;
 
 namespace SELabelControl
 {
@@ -29,8 +31,6 @@ namespace SELabelControl
         SELabelStatus _status = SELabelStatus.Default;
         
         Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;   // コントロールがフォーカスを得ている状態の背景色
-
-        static RomajiToKana kanaConverter = new RomajiToKana();
 
      /***************************
         コンストラクター
@@ -121,6 +121,18 @@ namespace SELabelControl
         /// </summary>
         public List<ISELabelItem> SeItems { get; set; }
 
+        private static IKanaConverter _KanaConverter;
+        public IKanaConverter KanaConverter
+        {
+            get { return _KanaConverter; }
+            set
+            {
+                if (_KanaConverter == null)
+                {
+                    _KanaConverter = value;
+                }
+            }
+        }
 
         /***************************
             Private Methods
@@ -297,7 +309,7 @@ namespace SELabelControl
         private void _textBoxKeywordElement_TextChanged(object sender, TextChangedEventArgs e)
         {
             // Ajust Input
-            string str = kanaConverter.ConvertToKana(textBoxKeywordElement.Text);
+            string str =  _KanaConverter.ConvertToKana(textBoxKeywordElement.Text);
             string keyword = AdjustToKeyword(str);
             textBoxKeywordElement.Text = keyword;
             textBoxKeywordElement.CaretIndex = keyword.Length;
@@ -307,7 +319,7 @@ namespace SELabelControl
 
             if(candidates != null)
             {
-                
+                Console.WriteLine(candidates.Count());
             }
 
         }

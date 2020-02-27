@@ -119,6 +119,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DevelopTransferRomaToKana\ConverterRomanLettersToKana\ConverterRomanLettersToKana.csproj">
+      <Project>{7bd2612b-e806-48b1-bb37-d37a7a93b9a1}</Project>
+      <Name>ConverterRomanLettersToKana</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InterfaceKanaConverter\InterfaceKanaConverter.csproj">
+      <Project>{519e8e67-7ef4-4b51-ac74-1b7e94dfab67}</Project>
+      <Name>InterfaceKanaConverter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{cf3c9344-7347-4803-96c0-a49c80937366}</Project>
       <Name>Interfaces</Name>

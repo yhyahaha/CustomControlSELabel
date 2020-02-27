@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SELabelControl", "SELabelControl\SELabelControl.csproj", "{A51FED27-206B-4E96-8544-9824F68E862C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceKanaConverter", "InterfaceKanaConverter\InterfaceKanaConverter.csproj", "{519E8E67-7EF4-4B51-AC74-1B7E94DFAB67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConverterRomanLettersToKana", "..\DevelopTransferRomaToKana\ConverterRomanLettersToKana\ConverterRomanLettersToKana.csproj", "{7BD2612B-E806-48B1-BB37-D37A7A93B9A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{A51FED27-206B-4E96-8544-9824F68E862C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A51FED27-206B-4E96-8544-9824F68E862C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A51FED27-206B-4E96-8544-9824F68E862C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{519E8E67-7EF4-4B51-AC74-1B7E94DFAB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{519E8E67-7EF4-4B51-AC74-1B7E94DFAB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{519E8E67-7EF4-4B51-AC74-1B7E94DFAB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{519E8E67-7EF4-4B51-AC74-1B7E94DFAB67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BD2612B-E806-48B1-BB37-D37A7A93B9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BD2612B-E806-48B1-BB37-D37A7A93B9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BD2612B-E806-48B1-BB37-D37A7A93B9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD2612B-E806-48B1-BB37-D37A7A93B9A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
