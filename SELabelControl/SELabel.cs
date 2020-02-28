@@ -330,9 +330,13 @@ namespace SELabelControl
             string text = textBoxKeywordElement.Text;
             if (String.IsNullOrWhiteSpace(text)) return;
             if (String.IsNullOrEmpty(text)) return;
-            
+
+            // ローマ字変換?
+            string str = "";
+            if(_KanaConverter != null) { str = _KanaConverter.ConvertToKana(text); }
+            else                       { str = text; }
+
             // Ajust Input
-            string str =  _KanaConverter.ConvertToKana(text);
             string keyword = AdjustToKeyword(str);
             textBoxKeywordElement.Text = keyword;
             textBoxKeywordElement.CaretIndex = keyword.Length;
@@ -435,6 +439,8 @@ namespace SELabelControl
 
                     textBoxKeywordElement.Focus();
                     textBoxKeywordElement.SelectAll();
+
+                    InputMethod.Current.ImeState = InputMethodState.Off;
 
                     break;
 
