@@ -23,19 +23,23 @@ namespace SELabelControl
     public class SELabel : Control
     {
 
-     /***************************
-        フィールド
-     ****************************/
+        #region Field
+
+        /***************************
+           フィールド
+        ****************************/
 
         enum SELabelStatus { Default, Selected, Editing }           // コントロールの状態
-        SELabelStatus _status = SELabelStatus.Default;
-        
+        SELabelStatus _status = SELabelStatus.Default;        
         Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;   // コントロールがフォーカスを得ている状態の背景色
-        
 
-     /***************************
-        コンストラクター
-     ****************************/
+        #endregion
+
+        #region Constractor
+
+        /***************************
+           コンストラクター
+        ****************************/
         static SELabel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SELabel), new FrameworkPropertyMetadata(typeof(SELabel)));
@@ -44,9 +48,9 @@ namespace SELabelControl
 
         public SELabel()
         {
-            this.IsKeyboardFocusWithinChanged += SELabel_IsKeyboardFocusWithinChanged;
-
             this.Loaded += SELabel_Loaded;
+
+            this.IsKeyboardFocusWithinChanged += SELabel_IsKeyboardFocusWithinChanged;            
             this.PreviewMouseLeftButtonDown += SELabel_PreviewMouseLeftButtonDown;
             this.PreviewKeyDown += SELabel_PreviewKeyDown;
 
@@ -56,9 +60,11 @@ namespace SELabelControl
 
             // 既定では中間一致検索
             _PrifixSearch = false;
-
-            //System.Diagnostics.Debug.WriteLine("SelItems" + SelItems.Count);
         }
+
+        #endregion
+
+        #region Elementsの定義
 
         /***************************
             Elements の定義
@@ -107,6 +113,10 @@ namespace SELabelControl
             set { _listBoxElement = value; }
         }
 
+        #endregion
+
+        #region DependencyProperty & Property
+
         /****************************
            依存関係プロパティ
         *****************************/
@@ -149,6 +159,10 @@ namespace SELabelControl
             get { return _PrifixSearch; }
             set { _PrifixSearch = value; }
         }
+
+        #endregion
+
+        #region Event処理
 
         /***************************
                SELabel本体のEvent
@@ -346,13 +360,9 @@ namespace SELabelControl
             // 前方一致検索ではkeywordの頭にスペースを挿入
             if (_PrifixSearch) {keyword = " " + keyword; }
 
-            WL("+" + keyword + "+");
-
             var candidates = SeItems.Where(x => x.SearchKeys.Contains(keyword))
                                     .OrderBy(x => x.SortKey)
                                     .Select(x => x.DisplayString);
-
-            WL(candidates.Count().ToString());
 
             if (keyword.Trim().Length > 0 && candidates.Any())
             {
@@ -389,6 +399,10 @@ namespace SELabelControl
                                    .Replace('ｯ', 'ﾂ');
             return str;
         }
+
+        #endregion
+
+        #region Methods
 
         /***************************
             Private Methods
@@ -480,6 +494,9 @@ namespace SELabelControl
             WL("Commit " + SeValue);
         }
 
+        #endregion
+
+        #region Utility
 
         /***************************
                開発用 Method
@@ -490,6 +507,8 @@ namespace SELabelControl
             str = DateTime.Now.ToString("mm:ss",CultureInfo.CurrentCulture) + " " + str;
             Console.WriteLine(str);
         }
+
+        #endregion
     }
 
 }
