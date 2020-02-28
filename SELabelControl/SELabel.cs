@@ -31,6 +31,7 @@ namespace SELabelControl
         SELabelStatus _status = SELabelStatus.Default;
         
         Brush backgroundBrushControlHasFocus = Brushes.AliceBlue;   // コントロールがフォーカスを得ている状態の背景色
+        
 
      /***************************
         コンストラクター
@@ -52,6 +53,9 @@ namespace SELabelControl
             // Mouseイベントは直接ルートイベントであるためイベントをルートさせるための処理が必要
             this.MouseLeftButtonDown += SELabel_MouseLeftButtonDown;
             AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(SELabel_MouseLeftButtonDown), true);
+
+            // 既定では中間一致検索
+            _PrifixSearch = false;
 
             //System.Diagnostics.Debug.WriteLine("SelItems" + SelItems.Count);
         }
@@ -136,6 +140,14 @@ namespace SELabelControl
                     _KanaConverter = value;
                 }
             }
+        }
+
+        // 検索の前方一致を指定（規定ではFalse)
+        private bool _PrifixSearch;
+        public bool PrifixSearch
+        {
+            get { return _PrifixSearch; }
+            set { _PrifixSearch = value; }
         }
 
         /***************************
@@ -305,7 +317,7 @@ namespace SELabelControl
             {
                 UpdateSeLabelStatus(SELabelStatus.Default);
                 textBoxKeywordElement.Text = string.Empty;
-                listBoxElement.Items.Clear();
+                listBoxElement.ItemsSource = null;
             }
         }
 
@@ -327,10 +339,9 @@ namespace SELabelControl
 
             // Search by keyword
             
-            // 前方一致検索
-            //var candidates = SeItems.Where(x => x.SearchKeys.Contains(" " + keyword)).Select(x => x.DisplayString);
-
-            // 中間一致検索
+            // 前方一致検索ではkeywordの頭にスペースを挿入
+            if (_PrifixSearch) {keyword = " " + keyword; }
+            
             var candidates = SeItems.Where(x => x.SearchKeys.Contains(keyword)).Select(x => x.DisplayString);
 
             if (keyword.Length > 0 && candidates != null)
@@ -345,7 +356,7 @@ namespace SELabelControl
             }
 
             // 完全なコード入力で確定
-            var items = SeItems.Where(x => x.ItemValue == keyword).Select(x => x.ItemValue);
+            var items = SeItems.Where(x => x.ItemValue == keyword.Trim()).Select(x => x.ItemValue);
             if(items !=null && items.Count() == 1)
             {
                 string value = items.First();
