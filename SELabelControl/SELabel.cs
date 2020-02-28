@@ -319,7 +319,12 @@ namespace SELabelControl
 
             if(candidates != null)
             {
+                popupElement.IsOpen = true;
                 Console.WriteLine(candidates.Count());
+            }
+            else
+            {
+                popupElement.IsOpen = false;
             }
 
         }

@@ -11,7 +11,7 @@
                     <Grid>
                         <Label x:Name="labelItem" />
                         <TextBox x:Name="textBoxKeyword"/>
-                        <Popup x:Name="popup">
+                        <Popup x:Name="popup" Width="{Binding ElementName=textBoxKeyword, Path=ActualWidth}">
                             <ScrollViewer>
                                 <ListBox x:Name="listBox"/>
                             </ScrollViewer>
