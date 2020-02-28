@@ -328,8 +328,8 @@ namespace SELabelControl
         private void _textBoxKeywordElement_TextChanged(object sender, TextChangedEventArgs e)
         {
             string text = textBoxKeywordElement.Text;
-            if (String.IsNullOrWhiteSpace(text)) return;
-            if (String.IsNullOrEmpty(text)) return;
+            //if (String.IsNullOrWhiteSpace(text)) return;
+            //if (String.IsNullOrEmpty(text)) return;
 
             // ローマ字変換?
             string str = "";
@@ -345,12 +345,16 @@ namespace SELabelControl
             
             // 前方一致検索ではkeywordの頭にスペースを挿入
             if (_PrifixSearch) {keyword = " " + keyword; }
-            
+
+            WL("+" + keyword + "+");
+
             var candidates = SeItems.Where(x => x.SearchKeys.Contains(keyword))
                                     .OrderBy(x => x.SortKey)
                                     .Select(x => x.DisplayString);
 
-            if (keyword.Length > 0 && candidates != null)
+            WL(candidates.Count().ToString());
+
+            if (keyword.Trim().Length > 0 && candidates.Any())
             {
                 listBoxElement.ItemsSource = candidates;
                 popupElement.IsOpen = true;

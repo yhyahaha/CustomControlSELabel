@@ -34,7 +34,7 @@
                        SeValue="{Binding Item, Mode=TwoWay }"
                        SeItems="{x:Static vm:ViewModel.SeItems}"
                        KanaConverter="{StaticResource kanaConv}"
-                       PrifixSearch="True"/>
+                       PrifixSearch="False"/>
 
         <TextBox Grid.Row="2" Grid.Column="1" Text="Dummy TextBox2" Background="PaleGreen"/>
         <Button x:Name="button" Content="Button" Click="button_Click"/>
