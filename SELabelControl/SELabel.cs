@@ -47,13 +47,14 @@ namespace SELabelControl
 
             this.Loaded += SELabel_Loaded;
             this.PreviewMouseLeftButtonDown += SELabel_PreviewMouseLeftButtonDown;
-            //this.KeyDown += SELabel_KeyDown;
             this.PreviewKeyDown += SELabel_PreviewKeyDown;
+
+            // Mouseイベントは直接ルートイベントであるためイベントをルートさせるための処理が必要
+            this.MouseLeftButtonDown += SELabel_MouseLeftButtonDown;
+            AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(SELabel_MouseLeftButtonDown), true);
 
             //System.Diagnostics.Debug.WriteLine("SelItems" + SelItems.Count);
         }
-
-
 
         /***************************
             Elements の定義
@@ -145,6 +146,8 @@ namespace SELabelControl
         void ResetControl()
         {
             SetDisplayString(SeValue);
+            textBoxKeywordElement.Text = string.Empty;
+            listBoxElement.ItemsSource = null;
             UpdateSeLabelStatus(SELabelStatus.Default);
         }
 
@@ -208,6 +211,20 @@ namespace SELabelControl
             }
         }
 
+        //データの確定
+        void Commit(string value)
+        {
+            var result = SeItems.Where(x => x.DisplayString == value).Select(x => x.ItemValue).FirstOrDefault();
+
+            if(result != null)
+            {
+                SeValue = result;
+            }
+
+            ResetControl();
+            WL("Commit " + SeValue);
+        }
+
         /***************************
                SELabel本体のEvent
         ****************************/
@@ -253,20 +270,38 @@ namespace SELabelControl
         {
             WL("SELabel_PreviewMouseLeftButtonDown");
 
-            this.Focus();
-
-            // → SELabel_IsKeyboardFocusWithinChanged ... _status is selected
-            // → ChangeSELabelFunction
+            // コントロールフォーカスを取得
+            if (!this.IsFocused)
+            {
+                this.Focus();
+            }
         }
 
-        // -> SELabel_PreviewMouseDown
-        // -> SELabel_IsKeyboardFocusWithinChanged
-        // -> SELabel_PreviewMouseLeftButtonUp
-        // -> SELabel_PreviewMouseUp  
+        private void SELabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            WL("SELabel_MouseLeftButtonDown");
 
-        // ×　SELabel_MouseDown  
-        // ×　SELabel_MouseUp
-
+            if (_status == SELabelStatus.Editing)
+            {
+                // ListBoxでの選択中に...
+                if (popupElement.IsOpen == true)
+                {
+                    // textBoxElementをクリック
+                    if (textBoxKeywordElement.IsFocused)
+                    {
+                        listBoxElement.SelectedIndex = -1;
+                    }
+                    else
+                    {
+                        //ListBoxItemのクリックで確定
+                        if(listBoxElement.SelectedIndex>-1)
+                        {
+                            Commit(listBoxElement.SelectedItem.ToString());
+                        }
+                    }
+                }
+            }
+        }
 
         // --- KeyEvent ---
         private void SELabel_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -322,6 +357,12 @@ namespace SELabelControl
                 {
                     listBoxElement.SelectedIndex = -1;
                     textBoxKeywordElement.Focus();
+                }
+
+                // Enterキーで確定
+                if (e.Key == Key.Enter && listBoxElement.SelectedIndex > -1)
+                {
+                    Commit(listBoxElement.SelectedItem.ToString());
                 }
             }
         }

@@ -28,7 +28,7 @@
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
                         <Label x:Name="labelItem" />
-                        <TextBox x:Name="textBoxKeyword"/>
+                        <TextBox x:Name="textBoxKeyword" Background="Transparent"/>
                         <Popup x:Name="popup" 
                                Width="{Binding ElementName=textBoxKeyword, Path=ActualWidth}">
                             <ScrollViewer>

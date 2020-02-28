@@ -31,6 +31,7 @@
 
         <!--SELable-->
         <local:SELabel x:Name="seLabel" Grid.Row="1" Grid.Column="1" FontSize="12" FontFamily="Meiryo UI" SnapsToDevicePixels="True"
+                       Background="Transparent"
                        SeValue="{Binding Item, Mode=TwoWay }"
                        SeItems="{x:Static vm:ViewModel.SeItems}"
                        KanaConverter="{StaticResource kanaConv}"/>
