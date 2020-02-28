@@ -346,7 +346,9 @@ namespace SELabelControl
             // 前方一致検索ではkeywordの頭にスペースを挿入
             if (_PrifixSearch) {keyword = " " + keyword; }
             
-            var candidates = SeItems.Where(x => x.SearchKeys.Contains(keyword)).Select(x => x.DisplayString);
+            var candidates = SeItems.Where(x => x.SearchKeys.Contains(keyword))
+                                    .OrderBy(x => x.SortKey)
+                                    .Select(x => x.DisplayString);
 
             if (keyword.Length > 0 && candidates != null)
             {
