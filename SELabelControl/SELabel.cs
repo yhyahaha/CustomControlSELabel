@@ -157,7 +157,6 @@ namespace SELabelControl
             }
 
             labelItemElement.Content = displayString;
-
         }
 
 
@@ -317,13 +316,14 @@ namespace SELabelControl
             // Search by keyword
             var candidates = SeItems.Where(x => x.SearchKeys.Contains(" " + keyword)).Select(x => x.DisplayString);
 
-            if(candidates != null)
+            if(keyword.Length > 0 && candidates != null)
             {
+                listBoxElement.ItemsSource = candidates;
                 popupElement.IsOpen = true;
-                Console.WriteLine(candidates.Count());
             }
             else
             {
+                listBoxElement.ItemsSource = null;
                 popupElement.IsOpen = false;
             }
 
