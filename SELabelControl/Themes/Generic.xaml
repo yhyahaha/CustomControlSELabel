@@ -2,7 +2,25 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:SELabelControl">
-    
+
+    <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border Background="{TemplateBinding Background}" Padding="2">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="LightBlue"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type local:SELabel}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
@@ -11,9 +29,10 @@
                     <Grid>
                         <Label x:Name="labelItem" />
                         <TextBox x:Name="textBoxKeyword"/>
-                        <Popup x:Name="popup" Width="{Binding ElementName=textBoxKeyword, Path=ActualWidth}">
+                        <Popup x:Name="popup" 
+                               Width="{Binding ElementName=textBoxKeyword, Path=ActualWidth}">
                             <ScrollViewer>
-                                <ListBox x:Name="listBox"/>
+                                <ListBox x:Name="listBox" FocusVisualStyle="{x:Null}" ItemContainerStyle="{StaticResource ListBoxItemStyle}"/>
                             </ScrollViewer>
                         </Popup>
                     </Grid>

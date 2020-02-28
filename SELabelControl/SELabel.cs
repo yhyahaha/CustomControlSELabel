@@ -54,6 +54,7 @@ namespace SELabelControl
         }
 
 
+
         /***************************
             Elements の定義
         ****************************/
@@ -226,6 +227,7 @@ namespace SELabelControl
             textBoxKeywordElement = GetTemplateChild("textBoxKeyword") as TextBox;
             popupElement = GetTemplateChild("popup") as Popup;
             listBoxElement = GetTemplateChild("listBox") as ListBox;
+
         }
 
         private void SELabel_Loaded(object sender, RoutedEventArgs e)
@@ -267,35 +269,62 @@ namespace SELabelControl
 
 
         // --- KeyEvent ---
-        //private void SELabel_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //}
         private void SELabel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            WL("SELabel_PreviewKeyDown"); 
+            
             // Delete : Itemを削除してEditngに設定
             if (e.Key == Key.Delete)
             {
-                WL("Del");
-
                 SeValue = string.Empty;
                 SetDisplayString(SeValue);
                 UpdateSeLabelStatus(SELabelStatus.Editing);
+                e.Handled = true;
             }
 
-            // Esc : Editing時 候補が表示されている場合は候補の削除
-            if (e.Key == Key.Escape && _status == SELabelStatus.Editing)
+            // Editing時のキー操作
+            if (_status == SELabelStatus.Editing)
             {
-                listBoxElement.ItemsSource = null;
-                textBoxKeywordElement.Text = string.Empty;
-            }
+                // Esc
+                if (e.Key == Key.Escape)
+                {
+                    // KeyWord入力時　候補のリセット
+                    if (textBoxKeywordElement.IsKeyboardFocusWithin)
+                    {
+                        listBoxElement.ItemsSource = null;
+                        textBoxKeywordElement.Text = string.Empty;
+                        e.Handled = true;
+                    }
 
-            // 下矢印
-            if (e.Key == Key.Down)
-            {
-                WL(listBoxElement.Items.Count.ToString());
+                    // List選択時　Keyword入力へ戻る
+                    if (listBoxElement.IsKeyboardFocusWithin)
+                    {
+                        listBoxElement.ItemsSource = null;
+                        popupElement.IsOpen = false;
+                        textBoxKeywordElement.Focus();
+                        e.Handled = true;
+                    }
+                }
+
+                // 下矢印
+                if (e.Key == Key.Down)
+                {
+                    // TextBoxElementからListboxElementへのフォーカス遷移
+                    if (popupElement.IsOpen && listBoxElement.IsKeyboardFocusWithin == false)
+                    {
+                        listBoxElement.Focus();
+                        listBoxElement.SelectedIndex = 0;
+                    }
+                }
+
+                // 上矢印 TextBoxElementに戻る
+                if(e.Key==Key.Up && listBoxElement.SelectedIndex==0)
+                {
+                    listBoxElement.SelectedIndex = -1;
+                    textBoxKeywordElement.Focus();
+                }
             }
         }
-
 
         // --- KeybordFocusEvent ---
 
@@ -317,6 +346,8 @@ namespace SELabelControl
             else
             {
                 UpdateSeLabelStatus(SELabelStatus.Default);
+                textBoxKeywordElement.Text = string.Empty;
+                listBoxElement.Items.Clear();
             }
         }
 
@@ -333,9 +364,14 @@ namespace SELabelControl
             textBoxKeywordElement.CaretIndex = keyword.Length;
 
             // Search by keyword
-            var candidates = SeItems.Where(x => x.SearchKeys.Contains(" " + keyword)).Select(x => x.DisplayString);
+            
+            // 前方一致検索
+            //var candidates = SeItems.Where(x => x.SearchKeys.Contains(" " + keyword)).Select(x => x.DisplayString);
 
-            if(keyword.Length > 0 && candidates != null)
+            // 中間一致検索
+            var candidates = SeItems.Where(x => x.SearchKeys.Contains(keyword)).Select(x => x.DisplayString);
+
+            if (keyword.Length > 0 && candidates != null)
             {
                 listBoxElement.ItemsSource = candidates;
                 popupElement.IsOpen = true;
@@ -345,7 +381,6 @@ namespace SELabelControl
                 listBoxElement.ItemsSource = null;
                 popupElement.IsOpen = false;
             }
-
         }
 
         // 拗音,促音の補正
