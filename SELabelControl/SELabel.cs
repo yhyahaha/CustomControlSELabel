@@ -139,93 +139,6 @@ namespace SELabelControl
         }
 
         /***************************
-            Private Methods
-        ****************************/
-
-        // コントロールがフォーカスを持たない時の状態
-        void ResetControl()
-        {
-            SetDisplayString(SeValue);
-            textBoxKeywordElement.Text = string.Empty;
-            listBoxElement.ItemsSource = null;
-            UpdateSeLabelStatus(SELabelStatus.Default);
-        }
-
-        // SeValueを表示する
-        void SetDisplayString(string value)
-        {
-            string displayString = string.Empty;
-
-            var item = SeItems.Where(x => x.ItemValue == value).FirstOrDefault();
-            if (item != null)
-            {
-                displayString = item.ToString();
-            }
-
-            labelItemElement.Content = displayString;
-        }
-
-
-        // ElementのVisibility,Backgroud等を操作する
-        void UpdateSeLabelStatus(SELabelStatus status)
-        {
-            WL("UpdateSeLabelStatus from " + _status.ToString() + " to " + status.ToString() );
-
-            _status = status;
-
-            switch (_status)
-            {
-                case SELabelStatus.Selected:
-                    labelItemElement.Visibility = Visibility.Visible;
-                    labelItemElement.Background = backgroundBrushControlHasFocus;
-
-                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
-
-                    popupElement.IsOpen = false;
-
-                    break;
-
-                case SELabelStatus.Editing:
-                    labelItemElement.Visibility = Visibility.Collapsed;
-
-                    textBoxKeywordElement.Visibility = Visibility.Visible;
-                    textBoxKeywordElement.Background = backgroundBrushControlHasFocus;
-
-                    textBoxKeywordElement.Focus();
-                    textBoxKeywordElement.SelectAll();
-
-                    break;
-
-                case SELabelStatus.Default:
-                    labelItemElement.Visibility = Visibility.Visible;
-                    labelItemElement.Background = Brushes.Transparent;
-
-                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
-
-                    popupElement.IsOpen = false;
-
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        //データの確定
-        void Commit(string value)
-        {
-            var result = SeItems.Where(x => x.DisplayString == value).Select(x => x.ItemValue).FirstOrDefault();
-
-            if(result != null)
-            {
-                SeValue = result;
-            }
-
-            ResetControl();
-            WL("Commit " + SeValue);
-        }
-
-        /***************************
                SELabel本体のEvent
         ****************************/
 
@@ -296,7 +209,9 @@ namespace SELabelControl
                         //ListBoxItemのクリックで確定
                         if(listBoxElement.SelectedIndex>-1)
                         {
-                            Commit(listBoxElement.SelectedItem.ToString());
+                            var result = listBoxElement.SelectedItem.ToString();
+                            var value = GetValueByDisplayString(result);
+                            Commit(value);
                         }
                     }
                 }
@@ -362,7 +277,9 @@ namespace SELabelControl
                 // Enterキーで確定
                 if (e.Key == Key.Enter && listBoxElement.SelectedIndex > -1)
                 {
-                    Commit(listBoxElement.SelectedItem.ToString());
+                    var result = listBoxElement.SelectedItem.ToString();
+                    var value = GetValueByDisplayString(result);
+                    Commit(value);
                 }
             }
         }
@@ -398,8 +315,12 @@ namespace SELabelControl
 
         private void _textBoxKeywordElement_TextChanged(object sender, TextChangedEventArgs e)
         {
+            string text = textBoxKeywordElement.Text;
+            if (String.IsNullOrWhiteSpace(text)) return;
+            if (String.IsNullOrEmpty(text)) return;
+            
             // Ajust Input
-            string str =  _KanaConverter.ConvertToKana(textBoxKeywordElement.Text);
+            string str =  _KanaConverter.ConvertToKana(text);
             string keyword = AdjustToKeyword(str);
             textBoxKeywordElement.Text = keyword;
             textBoxKeywordElement.CaretIndex = keyword.Length;
@@ -422,6 +343,15 @@ namespace SELabelControl
                 listBoxElement.ItemsSource = null;
                 popupElement.IsOpen = false;
             }
+
+            // 完全なコード入力で確定
+            var items = SeItems.Where(x => x.ItemValue == keyword).Select(x => x.ItemValue);
+            if(items !=null && items.Count() == 1)
+            {
+                string value = items.First();
+                Commit(value);
+            }
+            
         }
 
         // 拗音,促音の補正
@@ -438,6 +368,95 @@ namespace SELabelControl
                                    .Replace('ｯ', 'ﾂ');
             return str;
         }
+
+        /***************************
+            Private Methods
+        ****************************/
+
+        // コントロールがフォーカスを持たない時の状態
+        void ResetControl()
+        {
+            SetDisplayString(SeValue);
+            textBoxKeywordElement.Text = string.Empty;
+            listBoxElement.ItemsSource = null;
+            UpdateSeLabelStatus(SELabelStatus.Default);
+        }
+
+        // SeValueを表示する
+        void SetDisplayString(string value)
+        {
+            string displayString = string.Empty;
+
+            var item = SeItems.Where(x => x.ItemValue == value).FirstOrDefault();
+            if (item != null)
+            {
+                displayString = item.ToString();
+            }
+
+            labelItemElement.Content = displayString;
+        }
+
+
+        // ElementのVisibility,Backgroud等を操作する
+        void UpdateSeLabelStatus(SELabelStatus status)
+        {
+            WL("UpdateSeLabelStatus from " + _status.ToString() + " to " + status.ToString());
+
+            _status = status;
+
+            switch (_status)
+            {
+                case SELabelStatus.Selected:
+                    labelItemElement.Visibility = Visibility.Visible;
+                    labelItemElement.Background = backgroundBrushControlHasFocus;
+
+                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
+
+                    popupElement.IsOpen = false;
+
+                    break;
+
+                case SELabelStatus.Editing:
+                    labelItemElement.Visibility = Visibility.Collapsed;
+
+                    textBoxKeywordElement.Visibility = Visibility.Visible;
+                    textBoxKeywordElement.Background = backgroundBrushControlHasFocus;
+
+                    textBoxKeywordElement.Focus();
+                    textBoxKeywordElement.SelectAll();
+
+                    break;
+
+                case SELabelStatus.Default:
+                    labelItemElement.Visibility = Visibility.Visible;
+                    labelItemElement.Background = Brushes.Transparent;
+
+                    textBoxKeywordElement.Visibility = Visibility.Collapsed;
+
+                    popupElement.IsOpen = false;
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        // DisplayStringからitemValueを取得する
+        string GetValueByDisplayString(string displayString)
+        {
+            return SeItems.Where(x => x.DisplayString == displayString).Select(x => x.ItemValue).FirstOrDefault();
+        }
+
+        //データの確定
+        void Commit(string itemValue)
+        {
+            SeValue = itemValue;
+            ResetControl();
+
+            WL("Commit " + SeValue);
+        }
+
 
         /***************************
                開発用 Method
