@@ -47,10 +47,12 @@ namespace SELabelControl
 
             this.Loaded += SELabel_Loaded;
             this.PreviewMouseLeftButtonDown += SELabel_PreviewMouseLeftButtonDown;
-            this.KeyDown += SELabel_KeyDown;
+            //this.KeyDown += SELabel_KeyDown;
+            this.PreviewKeyDown += SELabel_PreviewKeyDown;
 
             //System.Diagnostics.Debug.WriteLine("SelItems" + SelItems.Count);
         }
+
 
         /***************************
             Elements の定義
@@ -265,9 +267,12 @@ namespace SELabelControl
 
 
         // --- KeyEvent ---
-        private void SELabel_KeyDown(object sender, KeyEventArgs e)
+        //private void SELabel_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //}
+        private void SELabel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            // Delete で Item を削除(Null)
+            // Delete : Itemを削除してEditngに設定
             if (e.Key == Key.Delete)
             {
                 WL("Del");
@@ -276,7 +281,21 @@ namespace SELabelControl
                 SetDisplayString(SeValue);
                 UpdateSeLabelStatus(SELabelStatus.Editing);
             }
+
+            // Esc : Editing時 候補が表示されている場合は候補の削除
+            if (e.Key == Key.Escape && _status == SELabelStatus.Editing)
+            {
+                listBoxElement.ItemsSource = null;
+                textBoxKeywordElement.Text = string.Empty;
+            }
+
+            // 下矢印
+            if (e.Key == Key.Down)
+            {
+                WL(listBoxElement.Items.Count.ToString());
+            }
         }
+
 
         // --- KeybordFocusEvent ---
 

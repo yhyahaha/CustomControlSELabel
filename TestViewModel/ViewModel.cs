@@ -18,7 +18,7 @@ namespace TestViewModel
         {
             CreateDivisionsSampleData();
             Item = null;
-            Item = string.Empty;
+            //Item = string.Empty;
             Item = SeItems[1].ItemValue;
         }
 
