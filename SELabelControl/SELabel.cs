@@ -55,7 +55,6 @@ namespace SELabelControl
             this.PreviewKeyDown += SELabel_PreviewKeyDown;
 
             // Mouseイベントは直接ルートイベントであるためイベントをルートさせるための処理が必要
-            this.MouseLeftButtonDown += SELabel_MouseLeftButtonDown;
             AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(SELabel_MouseLeftButtonDown), true);
 
             // 既定では中間一致検索

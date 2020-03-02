@@ -30,10 +30,7 @@ namespace CustomControlSELabel
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            var vm = (ViewModel)this.DataContext;
-            message.Text= vm.Item==null ? "Item is null" : vm.Item.ToString();
-
-            Console.WriteLine();
+            grid.Children.Remove(seLabel);
             
         }
     }
