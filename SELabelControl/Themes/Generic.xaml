@@ -30,8 +30,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SELabel}">
                     <Grid>
-                        <Label x:Name="labelItem"/>
-                        <TextBox x:Name="textBoxKeyword"/>
+                        <Label x:Name="labelItem" 
+                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        <TextBox x:Name="textBoxKeyword" 
+                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                         <Popup x:Name="popup" 
                                Width="{Binding ElementName=textBoxKeyword, Path=ActualWidth}">
                             <ScrollViewer Background="White">
