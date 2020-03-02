@@ -174,15 +174,12 @@ namespace SELabelControl
 
         public override void OnApplyTemplate()
         {
-            WL("public override void OnApplyTemplate");
-
             base.OnApplyTemplate();
 
             labelItemElement = GetTemplateChild("labelItem") as Label;
             textBoxKeywordElement = GetTemplateChild("textBoxKeyword") as TextBox;
             popupElement = GetTemplateChild("popup") as Popup;
             listBoxElement = GetTemplateChild("listBox") as ListBox;
-
         }
 
         private void SELabel_Loaded(object sender, RoutedEventArgs e)
@@ -206,8 +203,6 @@ namespace SELabelControl
 
         private void SELabel_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            WL("SELabel_PreviewMouseLeftButtonDown");
-
             // コントロールフォーカスを取得
             if (!this.IsFocused)
             {
@@ -217,8 +212,6 @@ namespace SELabelControl
 
         private void SELabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            WL("SELabel_MouseLeftButtonDown");
-
             if (_status == SELabelStatus.Editing)
             {
                 // ListBoxでの選択中に...
@@ -246,8 +239,6 @@ namespace SELabelControl
         // --- KeyEvent ---
         private void SELabel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            WL("SELabel_PreviewKeyDown"); 
-            
             // Delete : Itemを削除してEditngに設定
             if (e.Key == Key.Delete)
             {
@@ -313,8 +304,6 @@ namespace SELabelControl
 
         private void SELabel_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            WL("SELabel_IsKeyboardFocusWithinChanged");
-            
             if (this.IsKeyboardFocusWithin)
             {
                 if (!string.IsNullOrEmpty(SeValue))
@@ -434,8 +423,6 @@ namespace SELabelControl
         // ElementのVisibility,Backgroud等を操作する
         void UpdateSeLabelStatus(SELabelStatus status)
         {
-            WL("UpdateSeLabelStatus from " + _status.ToString() + " to " + status.ToString());
-
             _status = status;
 
             switch (_status)
@@ -489,25 +476,10 @@ namespace SELabelControl
         {
             SeValue = itemValue;
             ResetControl();
-
-            WL("Commit " + SeValue);
         }
 
         #endregion
 
-        #region Utility
-
-        /***************************
-               開発用 Method
-        ****************************/
-
-        private void WL(string str)
-        {
-            str = DateTime.Now.ToString("mm:ss",CultureInfo.CurrentCulture) + " " + str;
-            Console.WriteLine(str);
-        }
-
-        #endregion
     }
 
 }
